@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BKN - SHOES</title>
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="stylesheet" href="css/detail.css" />
+    <link rel="shortcut icon" href="image/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <section style="height: 90px">
+      <nav>
+        <div class="logo">
+          <h1><span> BKN</span> Shoes</h1>
+        </div>
+        <div class="banner">
+          <ul class="ul-header">
+            <li><a href="Nike.html">Home</a></li>
+            <li>
+              <a href="#Nike" class="a_header">Products</a>
+              <div class="banner_header">
+                <ul>
+                  <li><a href="Nike.html">Nike</a></li>
+                  <li><a href="Adidas">Adidas</a></li>
+                  <li><a href="Puma">Puma</a></li>
+                  <li><a href="Lacoste">Lacoste</a></li>
+                </ul>
+              </div>
+            </li>
+            <li><a href="#About">About</a></li>
+            <li><a href="#Services">Services</a></li>
+          </ul>
+        </div>
+        <div class="icons">
+          <i class="fa-solid fa-heart"></i>
+          <a href="cart.html" target="_blank" title="Cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </a>
+          <span id="username" style="margin-left: 10px"></span>
+          <a
+            id="login-btn"
+            href="login"
+            style="text-decoration: none; color: black"
+          >
+            <i class="fa-solid fa-user"></i> Đăng nhập
+          </a>
+          <button
+            id="logout-btn"
+            style="
+              display: none;
+              margin-left: 10px;
+              background-color: transparent;
+              border: none;
+              color: red;
+              cursor: pointer;
+            "
+          >
+            Đăng xuất
+          </button>
+        </div>
+      </nav>
+    </section>
+
+    <h1
+      style="
+        text-align: center;
+        font-size: 30px;
+        color: red;
+        text-decoration: underline;
+      "
+    >
+      Chi tiết sản phẩm
+    </h1>
+
+    <main class="container" id="product-detail">
+      <div class="left-column">
+        <img
+          id="product-image"
+          src="image/sample-product.jpg"
+          alt="Hình sản phẩm"
+          style="border: 4px solid hwb(319 42% 18%); border-radius: 25px"
+        />
+      </div>
+      <div class="right-column">
+        <div class="product-description">
+          <span><strong style="color: red">Giày</strong></span>
+          <h1 id="product-name" style="color: #d01313">Tên sản phẩm mẫu</h1>
+          <p id="product-description" style="font-size: 16px; color: #040003">
+            Đây là mô tả sản phẩm mẫu để hiển thị.
+          </p>
+        </div>
+        <div class="product-configuration">
+          <div class="product-color">
+            <span>Kích cỡ</span>
+            <div class="color-choose">
+              <div>
+                <input
+                  type="radio"
+                  id="size40"
+                  name="size"
+                  value="40"
+                  checked
+                />
+                <label for="size40"><span>40</span></label>
+              </div>
+              <div>
+                <input type="radio" id="size41" name="size" value="41" />
+                <label for="size41"><span>41</span></label>
+              </div>
+              <div>
+                <input type="radio" id="size42" name="size" value="42" />
+                <label for="size42"><span>42</span></label>
+              </div>
+              <div>
+                <input type="radio" id="size43" name="size" value="43" />
+                <label for="size43"><span>43</span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-price">
+          <span id="product-price">$99.99</span>
+          <input
+            type="hidden"
+            name="productId"
+            id="hidden-product-id"
+            value="sampleId123"
+          />
+          <button
+            id="add-to-cart-btn"
+            class="cart-btn"
+            style="background: hwb(319 30% 18%)"
+          >
+            Thêm sản phẩm
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer
+      style="text-align: center; padding: 20px; background-color: #f0f0f0"
+    >
+      <p>© 2025 BKN Shoes. Đã đăng ký bản quyền.</p>
+    </footer>
+
+    <script type="text/javascript">
+      async function fetchProductDetail() {
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          const pid = urlParams.get("pid");
+          if (!pid) {
+            throw new Error("Không có ID sản phẩm");
+          }
+
+          const response = await fetch(`/api/products/${pid}`, {
+            credentials: "include",
+          });
+          if (!response.ok) {
+            throw new Error("Không thể lấy chi tiết sản phẩm");
+          }
+
+          const product = await response.json();
+          document.getElementById("product-name").textContent = product.pname;
+          document.getElementById("product-image").src = product.pimage;
+          document.getElementById("product-description").textContent =
+            product.pdesc;
+          document.getElementById(
+            "product-price"
+          ).textContent = `$${product.pprice}`;
+          document.getElementById("hidden-product-id").value = product.pid;
+        } catch (error) {
+          console.error("Lỗi khi lấy chi tiết sản phẩm:", error);
+          document.getElementById("product-detail").textContent =
+            "Không thể tải chi tiết sản phẩm.";
+        }
+      }
+
+      async function addToCart() {
+        const productId = document.getElementById("hidden-product-id").value;
+        const quantity = 1; // Số lượng mặc định là 1
+
+        try {
+          const response = await fetch("/api/cart/add", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include", // Gửi cookie phiên
+            body: JSON.stringify({
+              productId: productId,
+              quantity: quantity,
+            }),
+          });
+
+          const result = await response.json();
+          if (response.ok) {
+            alert("Sản phẩm đã được thêm vào giỏ hàng!");
+          } else {
+            throw new Error(
+              result.message || "Không thể thêm sản phẩm vào giỏ hàng"
+            );
+          }
+        } catch (error) {
+          console.error("Lỗi khi thêm vào giỏ hàng:", error);
+          alert(`Lỗi: ${error.message}`);
+        }
+      }
+
+      function displayUserInfo() {
+        const username = sessionStorage.getItem("username");
+        const usernameSpan = document.getElementById("username");
+        const loginBtn = document.getElementById("login-btn");
+        const logoutBtn = document.getElementById("logout-btn");
+
+        if (username) {
+          usernameSpan.textContent = username;
+          loginBtn.style.display = "none";
+          logoutBtn.style.display = "inline";
+        } else {
+          usernameSpan.textContent = "";
+          loginBtn.style.display = "inline";
+          logoutBtn.style.display = "none";
+        }
+      }
+
+      document
+        .getElementById("add-to-cart-btn")
+        .addEventListener("click", addToCart);
+
+      document
+        .getElementById("logout-btn")
+        .addEventListener("click", function () {
+          sessionStorage.removeItem("username");
+          location.reload();
+        });
+
+      window.onload = function () {
+        displayUserInfo();
+        fetchProductDetail();
+      };
+    </script>
+  </body>
+</html>

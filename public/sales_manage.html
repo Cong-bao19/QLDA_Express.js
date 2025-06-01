@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo cáo doanh thu</title>
+<link rel="stylesheet" href="/public/css/sales_manage.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+	<div class="header">
+		<ul style="display: flex; margin-left: 300px; margin-top: -8px; font-size: 15px;">
+			<li class="trangchu">Trang chủ</li>
+			<li>Sản phẩm</li>
+			<li>Khuyến mãi</li>
+			<li>Liên hệ</li>
+		</ul>
+		<ul>
+			<li><a href="#"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+		</ul>
+	</div>
+	<div class="container">
+		<div class="menu" style="height: auto;">
+			<ul>
+				<li><a href="#"><img src="https://i.pinimg.com/originals/78/46/75/7846752cfd7b02455fa07c42a5ab2f37.jpg" class="image" alt=""></img></a></li>
+				<br>
+				<li class="fa-solid fa-user" style="margin-left: 60px; margin-bottom: 10px; margin-right: 5px; color: white; font-size:12px"></li>
+				<li>Chào mừng bạn trở lại</li>
+				<br><br><hr><br>
+				<h1><a href="control.html"><button class = "but0"><i class="fa-solid fa-landmark"></i> Bảng điều khiển</button></a></h1>
+            <h1><a href="cus_manage.html"><button class = "but1"><i class="fa-solid fa-id-card"></i> Quản lý khách hàng</button></a></h1>
+            <h1><a href="pro_manage.html"><button class = "but2"><i class="fa-solid fa-box"></i> Quản lý sản phẩm</button></a></h1>
+            <h1><a href="order_manage.html"><button class = "but3"><i class="fa-solid fa-money-bill-1"></i> Quản lý đơn hàng</button></a></h1>
+            <h1><a href="sales_manage.html"><button class = "but4"><i class="fa-solid fa-money-check-dollar"></i> Báo cáo doanh thu</button></a></h1>
+			</ul>
+		</div>
+
+		<div class="main">
+			<div class="time">
+				<ul style="display: flex; margin-left: 30px;">
+					<li style="list-style-type: none; margin-top: 10px; font-weight: bold; font-size: 14px;">Báo cáo doanh thu</li>
+				</ul>
+				<ul id="currentTime" style="display: flex; float: right; margin-right: 30px;">
+					<li style="list-style-type: none; margin-top: -16px; font-weight: bold; font-size: 14px;">Thứ 3, 09/04/2024 - 17:05:10</li>
+				</ul>
+
+				<script type="text/javascript">
+					function updateTime() {
+						var currentDate = new Date();
+						var formattedDate = currentDate.toLocaleString('vi-VN', {
+							weekday: 'long',
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							hour: '2-digit',
+							minute: '2-digit',
+							second: '2-digit'
+						});
+						document.getElementById('currentTime').innerHTML = "<li style='list-style-type: none; margin-top: -16px; font-weight: bold; font-size: 14px;'>" + formattedDate + "</li>";
+					}
+					setInterval(updateTime, 1000);
+					updateTime();
+				</script>
+			</div>
+
+			<!-- Tổng sản phẩm -->
+			<div class="sumofproduct" style="display: flex;">
+				<ul style="margin-left: 30px;">
+					<li style="list-style-type: none; margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 18px; color: red;">Tổng sản phẩm</li>
+					<li style="list-style-type: none; font-size: 14px;"><span id="total-products"></span> sản phẩm</li>
+				</ul>
+				<ul>
+					<li style="list-style-type: none; margin-left: 40px; margin-top: 28px; font-size: 40px; color: #22ad56;">
+						<a><i class="fa-solid fa-tag"></i></a>
+					</li>
+				</ul>
+			</div>
+
+			<!-- Tổng đơn hàng -->
+			<div class="sumoforder" style="display: flex;">
+				<ul style="margin-left: 30px;">
+					<li style="list-style-type: none; margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 18px; color: red;">Tổng đơn hàng</li>
+					<li style="list-style-type: none; font-size: 14px;"><span id="total-orders"></span> đơn hàng</li>
+				</ul>
+				<ul>
+					<li style="list-style-type: none; margin-left: 40px; margin-top: 28px; font-size: 40px; color: #1d5aab;">
+						<a><i class="fa-solid fa-box"></i></a>
+					</li>
+				</ul>
+			</div>
+
+			<!-- Tổng thu nhập -->
+			<div class="sumofmoney" style="display: flex;">
+				<ul style="margin-left: 30px;">
+					<li style="list-style-type: none; margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 18px; color: red;">Tổng thu nhập</li>
+					<li style="list-style-type: none; font-size: 14px;"><span id="total-revenue"></span> USD</li>
+				</ul>
+				<ul>
+					<li style="list-style-type: none; margin-left: 40px; margin-top: 28px; font-size: 40px; color: #ff8b07;">
+						<a><i class="fa-solid fa-money-bill-1"></i></a>
+					</li>
+				</ul>
+			</div>
+
+			<!-- Sản phẩm bán chạy trong ngày -->
+			<div class="topsales" style="height: 330px;">
+				<ul style="display: flex; margin-left: 30px;">
+					<li style="list-style-type: none; margin-top: 20px; font-weight: bold; font-size: 20px;">SẢN PHẨM BÁN CHẠY TRONG NGÀY</li>
+				</ul>
+				<br><hr><br> <br>
+				<table class="custom-table" style="margin-left: 30px;">
+					<thead>
+						<tr>
+							<th>Mã sản phẩm</th>
+							<th>Tên sản phẩm</th>
+							<th>Giá tiền</th>
+							<th>Số lượng</th>
+							<th>Danh mục</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Biểu đồ doanh thu -->
+			<div style="width: 100%; height: 400px; justify-content: center; margin-left: 220px;">
+				<canvas id="sales-chart"></canvas>
+			</div>
+
+			<script>
+			  document.addEventListener('DOMContentLoaded', async () => {
+			    try {
+			      // Fetch total revenue, orders, and products
+			      const revenueResponse = await fetch('/api/sales/total-revenue');
+			      const revenueData = await revenueResponse.json();
+			      document.getElementById('total-revenue').textContent = revenueData.total_revenue || 0;
+
+			      const ordersResponse = await fetch('/api/sales/total-orders');
+			      const ordersData = await ordersResponse.json();
+			      document.getElementById('total-orders').textContent = ordersData.total_orders || 0;
+
+			      const productsResponse = await fetch('/api/sales/total-products');
+			      const productsData = await productsResponse.json();
+			      document.getElementById('total-products').textContent = productsData.total_products || 0;
+
+			      // Fetch all sales data
+			      const salesResponse = await fetch('/api/sales/all-sales');
+			      const salesData = await salesResponse.json();
+
+			      // Prepare data for the chart
+			      const labels = salesData.map(item => `Tháng ${item.month}`);
+			      const data = salesData.map(item => item.total_sales);
+
+			      // Render the chart
+			      const ctx = document.getElementById('sales-chart').getContext('2d');
+			      const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+			      gradient.addColorStop(0, 'rgba(75, 192, 192, 0.8)');
+			      gradient.addColorStop(0.5, 'rgba(153, 102, 255, 0.6)');
+			      gradient.addColorStop(1, 'rgba(255, 159, 64, 0.4)');
+
+			      new Chart(ctx, {
+			        type: 'bar',
+			        data: {
+			          labels: labels,
+			          datasets: [
+			            {
+			              label: 'Doanh thu (USD)',
+			              data: data,
+			              backgroundColor: gradient,
+			              borderColor: 'rgba(75, 192, 192, 1)',
+			              borderWidth: 2,
+			              borderRadius: 15,
+			              barPercentage: 0.5,
+			              hoverBackgroundColor: 'rgba(255, 99, 132, 0.9)'
+			            }
+			          ]
+			        },
+			        options: {
+			          responsive: true,
+			          plugins: {
+			            tooltip: {
+			              callbacks: {
+			                label: function(context) {
+			                  return `${context.dataset.label}: ${context.raw.toLocaleString('vi-VN')} USD`;
+			                }
+			              },
+			              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+			              titleFont: { size: 16 },
+			              bodyFont: { size: 14 }
+			            },
+			            legend: {
+			              labels: {
+			                font: {
+			                  size: 16
+			                },
+			                color: '#333'
+			              }
+			            },
+			            annotation: {
+			              annotations: {
+			                maxValue: {
+			                  type: 'line',
+			                  yMin: Math.max(...data),
+			                  yMax: Math.max(...data),
+			                  borderColor: 'rgba(255, 99, 132, 0.8)',
+			                  borderWidth: 2,
+			                  label: {
+			                    content: `Max: ${Math.max(...data).toLocaleString('vi-VN')} USD`,
+			                    enabled: true,
+			                    position: 'end',
+			                    backgroundColor: 'rgba(255, 99, 132, 0.8)',
+			                    color: '#fff',
+			                    font: {
+			                      size: 12
+			                    }
+			                  }
+			                }
+			              }
+			            }
+			          },
+			          scales: {
+			            x: {
+			              grid: {
+			                display: false
+			              },
+			              ticks: {
+			                font: {
+			                  size: 14
+			                },
+			                color: '#555'
+			              }
+			            },
+			            y: {
+			              beginAtZero: true,
+			              grid: {
+			                color: 'rgba(200, 200, 200, 0.3)',
+			                borderDash: [5, 5]
+			              },
+			              ticks: {
+			                callback: function(value) {
+			                  return value.toLocaleString('vi-VN');
+			                },
+			                font: {
+			                  size: 14
+			                },
+			                color: '#555'
+			              }
+			            }
+			          }
+			        }
+			      });
+
+			      // Fetch top-selling products of the day
+			      const topSellingResponse = await fetch('/api/sales/top-selling-products-today');
+			      const topSellingData = await topSellingResponse.json();
+			      const topSellingTableBody = document.querySelector('.topsales tbody');
+
+			      // Handle case when no data is available
+			      if (topSellingData.length === 0) {
+			        const noDataRow = document.createElement('tr');
+			        noDataRow.innerHTML = '<td colspan="5" style="text-align: center;">Không có dữ liệu</td>';
+			        topSellingTableBody.appendChild(noDataRow);
+			      } else {
+			        topSellingData.forEach(product => {
+			          const row = document.createElement('tr');
+			          row.innerHTML = `
+			            <td>${product.product_id}</td>
+			            <td>${product.product_name}</td>
+			            <td>${product.price.toLocaleString('vi-VN')} USD</td>
+			            <td>${product.quantity}</td>
+			            <td>${product.category}</td>
+			          `;
+			          topSellingTableBody.appendChild(row);
+			        });
+			      }
+			    } catch (error) {
+			      console.error('Error loading sales data:', error);
+			    }
+			  });
+			</script>
+
+		</div>
+	</div>
+</body>
+</html>

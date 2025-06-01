@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=width=device-width, initial-scale=1.0"
+    />
+    <title>Quản lý đơn hàng</title>
+    <link rel="stylesheet" href="css/order_manage.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <ul
+        style="
+          display: flex;
+          margin-left: 300px;
+          margin-top: -8px;
+          font-size: 15px;
+        "
+      >
+        <li>Trang chủ</li>
+        <li>Sản phẩm</li>
+        <li>Khuyến mãi</li>
+        <li>Liên hệ</li>
+      </ul>
+      <ul>
+        <li>
+          <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <div class="menu" style="height: auto">
+        <ul>
+          <li>
+            <a href="#"
+              ><img
+                src="https://i.pinimg.com/originals/78/46/75/7846752cfd7b02455fa07c42a5ab2f37.jpg"
+                class="image"
+                alt=""
+            /></a>
+          </li>
+          <br />
+          <li
+            class="fa-solid fa-user"
+            style="
+              margin-left: 60px;
+              margin-bottom: 10px;
+              margin-right: 5px;
+              color: white;
+              font-size: 12px;
+            "
+          ></li>
+          <li>Chào mừng bạn trở lại</li>
+          <br /><br />
+          <hr />
+          <br />
+          <h1>
+            <a href="control.html"
+              ><button class="but0">
+                <i class="fa-solid fa-landmark"></i> Bảng điều khiển
+              </button></a
+            >
+          </h1>
+          <h1>
+            <a href="cus_manage.html"
+              ><button class="but1">
+                <i class="fa-solid fa-id-card"></i> Quản lý khách hàng
+              </button></a
+            >
+          </h1>
+          <h1>
+            <a href="pro_manage.html"
+              ><button class="but2">
+                <i class="fa-solid fa-box"></i> Quản lý sản phẩm
+              </button></a
+            >
+          </h1>
+          <h1>
+            <a href="order_manage.html"
+              ><button class="but3">
+                <i class="fa-solid fa-money-bill-1"></i> Quản lý đơn hàng
+              </button></a
+            >
+          </h1>
+        </ul>
+      </div>
+
+      <div class="mainn" style="margin-top: 45px">
+        <div class="button">
+          <button
+            onclick="exportToExcel()"
+            style="
+              background-color: #008c04;
+              border: #008c04;
+              color: #a2ecb5;
+              width: 100px;
+              height: 40px;
+            "
+          >
+            <i class="fa-solid fa-file-excel"></i> Xuất Excel
+          </button>
+          <button
+            id="save"
+            style="
+              background-color: rgb(235 25 25);
+              border: #008c04;
+              color: #a2ecb5;
+              width: 100px;
+              height: 40px;
+            "
+          >
+            <i class="fa-solid fa-floppy-disk"></i> Lưu thay đổi
+          </button>
+        </div>
+
+        <br />
+        <hr class="line" />
+        <br />
+
+        <div class="find">
+          <li>Tìm kiếm:</li>
+          <li>
+            <input
+              id="searchInput"
+              type="text"
+              style="
+                border-radius: 8px;
+                height: 25px;
+                margin-top: -30px;
+                background-color: rgb(234, 233, 233);
+              "
+              placeholder="Kong Bẻo"
+            />
+          </li>
+        </div>
+
+        <br /><br /><br /><br />
+
+        <div
+          class="option"
+          style="
+            display: flex;
+            text-align: center;
+            position: relative;
+            width: 30%;
+            height: 29px;
+            top: -55px;
+          "
+        >
+          <p
+            style="
+              text-align: center;
+              margin: 3px;
+              margin-right: 25px;
+              font-size: 19px;
+              font-weight: 700;
+              color: #0e66c0;
+              text-decoration: underline;
+            "
+          >
+            Danh mục trạng thái
+          </p>
+          <select id="statusSelect" style="border-radius: 7px">
+            <option>Tất cả</option>
+            <option>Chờ xác nhận</option>
+            <option>Đang vận chuyển</option>
+            <option>Đã giao hàng</option>
+            <option>Đã hủy</option>
+          </select>
+        </div>
+
+        <table class="custom-table" id="order-table">
+          <thead>
+            <tr style="height: 53px">
+              <th style="width: 12%">Mã đơn hàng</th>
+              <th style="width: 16%">Tên khách hàng</th>
+              <th style="font-size: 15px; width: 31%">Sản phẩm</th>
+              <th style="width: 9%">Số lượng</th>
+              <th style="width: 10%">Thành tiền</th>
+              <th style="width: 12%">Tình trạng</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="/js/DHangManage.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const response = await fetch("/admin/orders"); // ✅ Sửa chỗ này
+          const orders = await response.json();
+          const tableBody = document.querySelector("#order-table tbody");
+
+          const renderOrders = (filteredOrders) => {
+            tableBody.innerHTML = "";
+            filteredOrders.forEach((order) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                <td>${order.id}</td>
+                <td>${order.customer_name}</td>
+                <td>${order.products || "N/A"}</td>
+                <td>${order.quantity || "N/A"}</td>
+                <td>${order.total_amount + "$"}</td>
+                <td>${order.status}</td>
+              `;
+              tableBody.appendChild(row);
+            });
+          };
+
+          renderOrders(orders);
+
+          // Search functionality
+          const searchInput = document.getElementById("searchInput");
+          searchInput.addEventListener("input", () => {
+            const keyword = searchInput.value.toLowerCase();
+            const filteredOrders = orders.filter(
+              (order) =>
+                order.customer_name.toLowerCase().includes(keyword) ||
+                order.products.toLowerCase().includes(keyword)
+            );
+            renderOrders(filteredOrders);
+          });
+
+          // Filter by status
+          const statusSelect = document.getElementById("statusSelect");
+          statusSelect.addEventListener("change", () => {
+            const selectedStatus = statusSelect.value;
+            const filteredOrders =
+              selectedStatus === "Tất cả"
+                ? orders
+                : orders.filter((order) => order.status === selectedStatus);
+            renderOrders(filteredOrders);
+          });
+
+          // Export to Excel
+          const exportButton = document.querySelector(
+            'button[onclick="exportToExcel()"]'
+          );
+          exportButton.addEventListener("click", () => {
+            window.location.href = "/api/orders/orders_export";
+          });
+        } catch (error) {
+          console.error("Error loading orders:", error);
+        }
+      });
+    </script>
+  </body>
+</html>

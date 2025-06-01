@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết đơn hàng</title>
+    <link rel="stylesheet" href="css/OrderDetailUser.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      .detail-product {
+        border-bottom: 1px solid #ccc;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .product-info {
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
+      .product-info img {
+        width: 150px;
+        margin-right: 20px;
+      }
+      .title-quantity {
+        flex-grow: 1;
+      }
+      .price {
+        text-align: right;
+      }
+      .total-price {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #f8f8f8;
+        border-top: 1px solid #ccc;
+      }
+      .total-price h1 {
+        font-size: 20px;
+        font-weight: bold;
+        margin: 0;
+      }
+      .total-price h2 {
+        font-size: 20px;
+        color: #d90404;
+        margin: 0;
+      }
+      .detail {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+      }
+      .detail-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .detail-info {
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul
+          style="
+            display: flex;
+            justify-content: space-between;
+            width: 600px;
+            margin-left: 150px;
+            font-size: 18px;
+          "
+        >
+          <li><a href="home.html">Trang chủ</a></li>
+          <li><a href="home.html">Nike</a></li>
+          <li><a href="home.html#About">Giới thiệu</a></li>
+          <li><a href="https://www.facebook.com/itmediadut">Liên hệ</a></li>
+        </ul>
+        <ul
+          style="
+            margin-right: 100px;
+            display: flex;
+            justify-content: flex-end;
+            width: 288px;
+            margin-left: auto;
+            margin-top: -20px;
+            font-size: 18px;
+          "
+        >
+          <li>
+            <a href="cart.html"
+              ><i
+                class="fa-solid fa-cart-shopping"
+                style="font-size: 21px; margin-top: -6px"
+              ></i
+            ></a>
+          </li>
+          <li>
+            <a href="account.html"
+              ><i
+                class="fa-solid fa-circle-user"
+                style="font-size: 21px; margin-top: -6px"
+              ></i
+            ></a>
+          </li>
+          <li>
+            <a
+              href="#"
+              style="
+                font-size: 18px;
+                margin-top: -3px;
+                text-decoration: none;
+                color: black;
+              "
+              id="userLink"
+            >
+              <i class="fa-solid fa-user"></i> Đăng nhập
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="menu" style="min-height: 600px">
+        <div class="menu-form">
+          <ul class="information">
+            <li>
+              <i class="fa-solid fa-play" style="font-size: 13px"></i>
+              <a href="account.html">Thông tin tài khoản</a>
+            </li>
+          </ul>
+          <ul class="logout" style="float: right; margin-right: 10px">
+            <li>
+              <a href="#" onclick="logout()"
+                ><i class="fa-solid fa-right-from-bracket"></i
+              ></a>
+            </li>
+            <li><a href="#" onclick="logout()">Đăng xuất</a></li>
+          </ul>
+        </div>
+        <div class="text"></div>
+      </div>
+      <div class="merge">
+        <div class="order">
+          <ul>
+            <li>Sản phẩm</li>
+            <div style="margin-left: 20px; margin-top: 20px" id="order-id">
+              Mã đơn hàng: <strong>Đang tải...</strong>
+            </div>
+          </ul>
+          <div class="product" id="product-list">
+            <p>Đang tải...</p>
+          </div>
+        </div>
+        <div class="detail" id="order-detail">
+          <h1>Đang tải...</h1>
+          <p class="detail-label">Tên khách hàng:</p>
+          <p class="detail-info">Đang tải...</p>
+          <p class="detail-label">Số điện thoại:</p>
+          <p class="detail-info">Đang tải...</p>
+          <p class="detail-label">Địa chỉ:</p>
+          <p class="detail-info">Đang tải...</p>
+          <p class="detail-label">Thời gian đặt hàng:</p>
+          <p class="detail-info">Đang tải...</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const username = sessionStorage.getItem("username");
+        const userLink = document.getElementById("userLink");
+        if (username) {
+          userLink.innerHTML = `<i class="fa-solid fa-user"></i> ${username}`;
+          userLink.href = "account.html";
+        } else {
+          window.location.href = "/login.html";
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get("orderId");
+        if (!orderId) {
+          document.getElementById("product-list").innerHTML =
+            "<p>Không tìm thấy đơn hàng.</p>";
+          return;
+        }
+
+        fetchOrderDetails(orderId);
+      });
+
+      async function fetchOrderDetails(orderId) {
+        try {
+          const response = await fetch(`/api/orders/${orderId}`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(
+              `HTTP error! Status: ${response.status}, Message: ${errorText}`
+            );
+          }
+
+          const { order, user } = await response.json();
+          console.log("Order details:", order, user);
+          renderOrderDetails(order, user);
+        } catch (error) {
+          console.error("Error fetching order details:", error);
+          document.getElementById(
+            "product-list"
+          ).innerHTML = `<p>Lỗi khi tải chi tiết đơn hàng: ${error.message}</p>`;
+        }
+      }
+
+      function renderOrderDetails(order, user) {
+        document.getElementById(
+          "order-id"
+        ).innerHTML = `Mã đơn hàng: <strong>#${order.orderId}</strong>`;
+
+        const productList = document.getElementById("product-list");
+        productList.innerHTML =
+          order.items.length === 0
+            ? "<p>Không có sản phẩm nào.</p>"
+            : order.items
+                .map(
+                  (item) => `
+              <div class="detail-product">
+                <div class="product-info">
+                  <img src="${item.pimage}" alt="${item.pname}" style="width: 150px" />
+                  <div class="title-quantity">
+                    <h1>${item.pname}</h1>
+                    <h1>Số lượng: ${item.quantity}</h1>
+                  </div>
+                  <div class="price">
+                    <h2 class="price">$ ${item.price}</h2>
+                  </div>
+                </div>
+              </div>
+            `
+                )
+                .join("") +
+              `<div class="total-price">
+              <h1>Tổng tiền</h1>
+              <h2>$ ${order.totalmoney}</h2>
+            </div>`;
+
+        const orderDetail = document.getElementById("order-detail");
+        orderDetail.innerHTML = `
+          <h1>${order.status}</h1>
+          <p class="detail-label">Tên khách hàng:</p>
+          <p class="detail-info">${user.username}</p>
+          <p class="detail-label">Số điện thoại:</p>
+          <p class="detail-info">${user.uPhone || "Không có"}</p>
+          <p class="detail-label">Địa chỉ:</p>
+          <p class="detail-info">${user.address || "Không có"}</p>
+          <p class="detail-label">Thời gian đặt hàng:</p>
+          <p class="detail-info">${new Date(order.date).toLocaleString()}</p>
+        `;
+      }
+
+      async function logout() {
+        try {
+          const response = await fetch("/api/auth/logout", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            throw new Error(`Logout failed: ${response.status}`);
+          }
+          sessionStorage.removeItem("username");
+          window.location.href = "/login.html";
+        } catch (error) {
+          console.error("Error during logout:", error);
+          alert("Lỗi khi đăng xuất. Vui lòng thử lại.");
+        }
+      }
+    </script>
+  </body>
+</html>

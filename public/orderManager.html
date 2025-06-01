@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BKN - SHOES</title>
+    <link rel="stylesheet" href="css/orderManager.css" />
+    <link rel="shortcut icon" href="image/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      .detail-product {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 20px;
+        position: relative;
+      }
+      .product-info img {
+        vertical-align: middle;
+        cursor: pointer;
+      }
+      .total-money {
+        font-size: 16px;
+        color: #333;
+        margin-top: 10px;
+      }
+      .status-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .status-tabs button {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background: #f9f9f9;
+        border-radius: 5px;
+      }
+      .status-tabs button.active {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul
+          style="
+            display: flex;
+            justify-content: space-between;
+            width: 600px;
+            margin-left: 150px;
+            font-size: 18px;
+          "
+        >
+          <li><a href="Nike.html">Trang chủ</a></li>
+          <li>
+            <a
+              href="https://www.nike.com/vn/?msockid=2b0c636a9212667531d2771d931a6765"
+              >Nike</a
+            >
+          </li>
+          <li><a href="Nike.html#About">Giới thiệu</a></li>
+          <li><a href="https://www.facebook.com/itmediadut">Liên hệ</a></li>
+        </ul>
+        <ul
+          style="
+            margin-right: 100px;
+            display: flex;
+            justify-content: flex-end;
+            width: 264px;
+            margin-left: auto;
+            margin-top: -20px;
+            font-size: 18px;
+          "
+        >
+          <li>
+            <a href="cart.html"
+              ><i
+                class="fa-solid fa-cart-shopping"
+                style="font-size: 21px; margin-top: -6px"
+              ></i
+            ></a>
+          </li>
+
+          <li>
+            <a href="#" style="font-size: 18px; margin-top: -3px" id="userLink">
+              <i class="fa-solid fa-user"></i> Đăng nhập
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="menu" style="min-height: 600px; position: relative">
+        <div class="menu-form">
+          <ul class="information">
+            <li>
+              <i class="fa-solid fa-play" style="font-size: 13px"></i>
+              <a href="account.html">Cập nhật tài khoản</a>
+            </li>
+          </ul>
+          <div
+            class="logout"
+            style="position: absolute; bottom: 0; right: -10px"
+          >
+            <li>
+              <a href="#" onclick="logout()" style="padding: 0 5px"
+                ><i class="fa-solid fa-right-from-bracket"></i
+              ></a>
+            </li>
+            <a
+              href="#"
+              onclick="logout()"
+              style="text-decoration: none; color: red; font-size: 18px"
+              >Đăng xuất</a
+            >
+          </div>
+        </div>
+        <div class="text"></div>
+      </div>
+      <div class="content">
+        <div class="product-form">
+          <div class="customer-info">
+            <ul>
+              <li>Danh sách đơn hàng</li>
+              <br />
+              <div class="status-tabs">
+                <button data-status="Chờ xác nhận" class="active">
+                  Chờ xác nhận
+                </button>
+                <button data-status="Đang vận chuyển">Đang vận chuyển</button>
+                <button data-status="Đã giao hàng">Đã giao hàng</button>
+                <button data-status="Đã hủy">Đã hủy</button>
+              </div>
+              <div class="products" id="order-list"></div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const username = sessionStorage.getItem("username");
+        const userLink = document.getElementById("userLink");
+        if (username) {
+          userLink.innerHTML = `<i class="fa-solid fa-user"></i> ${username}`;
+          userLink.href = "account.html";
+        } else {
+          window.location.href = "/login.html";
+        }
+
+        // Thêm sự kiện cho các tab trạng thái
+        const tabs = document.querySelectorAll(".status-tabs button");
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            tabs.forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+            const status = tab.getAttribute("data-status");
+            fetchOrders(status);
+          });
+        });
+
+        // Tải đơn hàng mặc định với trạng thái "Chờ xác nhận"
+        fetchOrders("Chờ xác nhận");
+      });
+
+      async function fetchOrders(status) {
+        const orderList = document.getElementById("order-list");
+        try {
+          console.log("Fetching orders with status:", status);
+          const response = await fetch(
+            `/api/orders?status=${encodeURIComponent(status)}`,
+            {
+              method: "GET",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log("Response status:", response.status);
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(
+              `HTTP error! Status: ${response.status}, Message: ${errorText}`
+            );
+          }
+
+          const { orders } = await response.json();
+          console.log("Orders received:", orders);
+          if (orders.length === 0) {
+            orderList.innerHTML = `<p>Không có đơn hàng nào ở trạng thái ${status}.</p>`;
+            return;
+          }
+
+          renderOrders(orders);
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+          orderList.innerHTML = `<p>Lỗi khi tải đơn hàng: ${error.message}</p>`;
+        }
+      }
+
+      function renderOrders(orders) {
+        console.log("Rendering orders:", orders);
+        const orderList = document.getElementById("order-list");
+        orderList.innerHTML = "";
+        orders.forEach((order) => {
+          if (!order.orderId || !order.totalmoney) {
+            console.warn("Invalid order data:", order);
+          }
+          const firstItem = order.items[0] || {};
+          const orderDiv = document.createElement("div");
+          orderDiv.className = "detail-product";
+          orderDiv.innerHTML = `
+            <div class="product-info">
+              <div class="msp" style="position: absolute; top: 50px; left: 27px;">
+                <span style="color: #da0202;">Mã đơn hàng : #${
+                  order.orderId || "N/A"
+                }</span>
+              </div>
+              <div class="status" style="position: absolute; top: 51px; right: 16px; color: #14d414; font-size: 17px;">
+                <span>${order.status}</span>
+              </div>
+              ${
+                order.pimage
+                  ? `<img src="${order.pimage}" alt="Order Image" style="width: 110px; height: 110px;" onclick="window.location.href='/OrderDetailUser.html?orderId=${order.orderId}'">`
+                  : ""
+              }
+              <div class="title-quantity">
+                <h1>${firstItem.pname || "Không có sản phẩm"}</h1>
+                <h4>Tổng số sản phẩm: ${firstItem.quantity || "N/A"}</h4>
+              </div>
+              <div class="total-money">
+                <strong>Tổng tiền đơn hàng: $${
+                  order.totalmoney || "N/A"
+                }</strong>
+              </div>
+              <div class="evaluate" style="position: absolute; right: 10px; top: 200px;">
+                <button>Đánh giá</button>
+                <button>Mua lại</button>
+              </div>
+              <br><br>
+            </div>
+          `;
+          orderList.appendChild(orderDiv);
+        });
+      }
+
+      async function logout() {
+        try {
+          const response = await fetch("/api/auth/logout", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            throw new Error(`Logout failed: ${response.status}`);
+          }
+          sessionStorage.removeItem("username");
+          window.location.href = "/login.html";
+        } catch (error) {
+          console.error("Error during logout:", error);
+          alert("Lỗi khi đăng xuất. Vui lòng thử lại.");
+        }
+      }
+    </script>
+  </body>
+</html>

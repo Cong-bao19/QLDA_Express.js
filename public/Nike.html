@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BKN - SHOES</title>
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="shortcut icon" href="image/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <style>
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .pagination a {
+        color: red;
+        font-size: 20px;
+        padding: 8px 12px;
+        text-decoration: none;
+        margin: 0 4px;
+        background-color: #cebcbc;
+        border-radius: 5px;
+      }
+      .pagination a.active {
+        background-color: chocolate;
+        color: white;
+      }
+      .pagination a:hover:not(.active) {
+        background-color: #999;
+      }
+      .price-filter {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .price-filter label {
+        margin-right: 10px;
+        font-size: 16px;
+      }
+      .price-filter select {
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+      }
+      .services h1 {
+        margin-top: 50px; /* Đẩy dòng chữ 'our services' xuống */
+      }
+      /* CSS cho menu xổ xuống */
+      .user-menu {
+        position: relative;
+        display: inline-block;
+      }
+      .user-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+      }
+      .user-menu:hover .user-dropdown {
+        display: block;
+      }
+      .user-dropdown a {
+        display: block;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+      }
+      .user-dropdown a:hover {
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <nav>
+        <div class="logo">
+          <h1><span>BKN</span> Shoes</h1>
+        </div>
+        <div class="banner" style="width: 21%">
+          <ul class="ul-header">
+            <li><a href="home.html">Home</a></li>
+            <li>
+              <a href="#Products" class="a_header">Products</a>
+              <div class="banner_header" style="right: 135px">
+                <ul>
+                  <li><a href="nike.html">Nike</a></li>
+                  <li><a href="adidas.html">Adidas</a></li>
+                  <li><a href="puma.html">Puma</a></li>
+                  <li><a href="lacoste.html">Lacoste</a></li>
+                </ul>
+              </div>
+            </li>
+            <li><a href="#About">About</a></li>
+            <li><a href="#Services">Services</a></li>
+          </ul>
+        </div>
+        <div class="search-container">
+          <form id="searchForm">
+            <input
+              type="text"
+              id="searchInput"
+              name="query"
+              placeholder="Search..."
+            />
+            <button type="submit">Search</button>
+          </form>
+        </div>
+        <div class="icons">
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-cart-shopping" id="cart-icon"></i>
+          <div class="user-menu">
+            <a
+              href="login.html"
+              style="text-decoration: none; color: black"
+              id="userLink"
+            >
+              <i class="fa-solid fa-user"></i> Đăng nhập
+            </a>
+            <div class="user-dropdown" id="userDropdown">
+              <a href="account.html">Thông tin cá nhân</a>
+              <a href="orderManager.html">Xem đơn hàng</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="main" id="Home">
+        <div class="main_content">
+          <div class="main_text">
+            <h1>Nike<br /><span>Collection</span></h1>
+            <p>
+              <strong>Chào mừng bạn đến với cửa hàng giày BKN Shoes. </strong>
+              Chúng tôi tự hào là địa chỉ tin cậy để bạn có thể tìm kiếm những
+              đôi giày phong cách và chất lượng. Chúng tôi cung cấp một loạt các
+              sản phẩm từ các thương hiệu nổi tiếng như <strong>Nike</strong>,
+              <strong>Adidas</strong>, <strong>Puma</strong> và
+              <strong>Lacoste</strong>. Khám phá bộ sưu tập giày mới nhất của
+              chúng tôi và đừng quên tham gia cùng chúng tôi trong hành trình
+              khám phá phong cách của bạn!
+            </p>
+          </div>
+          <div class="main_image">
+            <img src="images/shoes4.png" alt="Nike Collection" />
+          </div>
+        </div>
+        <div class="social_icon">
+          <a
+            href="https://www.facebook.com/congbao.87"
+            target="_blank"
+            title="Facebook"
+          >
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://twitter.com" target="_blank" title="Twitter">
+            <i class="fa-brands fa-twitter"></i>
+          </a>
+          <a href="https://www.instagram.com" target="_blank" title="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://www.linkedin.com" target="_blank" title="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+        </div>
+        <div class="button">
+          <a href="#Products">SHOP NOW</a>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+    </section>
+
+    <div class="products" id="Products">
+      <h1>Products</h1>
+      <div class="price-filter">
+        <label for="priceRange">Lọc theo giá:</label>
+        <select id="priceRange" onchange="filterByPrice()">
+          <option value="">Tất cả</option>
+          <option value="0-50">0 - 50$</option>
+          <option value="50-100">50 - 100$</option>
+          <option value="100-200">100 - 200$</option>
+          <option value="200">Trên 200$</option>
+        </select>
+      </div>
+      <div class="box" id="product-list"></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <div class="services" id="Services">
+      <h1>our<span>services</span></h1>
+      <div class="services_cards">
+        <div class="services_box">
+          <i class="fa-solid fa-truck-fast"></i>
+          <h3>Giao hàng nhanh</h3>
+          <p>Giao hàng nhanh chóng, tiết kiệm thời gian.</p>
+        </div>
+        <div class="services_box">
+          <i class="fa-solid fa-rotate-left"></i>
+          <h3>10 ngày hoàn trả</h3>
+          <p>
+            Hoàn trả sản phẩm nếu không hài lòng, uy tín tạo nên thương hiệu.
+          </p>
+        </div>
+        <div class="services_box">
+          <i class="fa-solid fa-headset"></i>
+          <h3>24 x 7 Hỗ trợ</h3>
+          <p>Nhiệt tình hỗ trợ bạn 24/7. Liên hệ chúng tôi!</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2025 BKN Shoes. All rights reserved.</p>
+    </footer>
+
+    <script>
+      let currentPage = 1;
+      const limit = 8;
+      let currentQuery = "";
+      let currentPriceRange = "";
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const userElement = document.getElementById("userLink");
+        const userDropdown = document.getElementById("userDropdown");
+        const cartIcon = document.getElementById("cart-icon");
+        const username = sessionStorage.getItem("username");
+
+        if (username) {
+          userElement.innerHTML = `<i class="fa-solid fa-user"></i> ${username}`;
+          userElement.href = "#"; // Ngăn chuyển hướng khi đã đăng nhập
+          userElement.style.cursor = "pointer"; // Đổi con trỏ chuột
+
+          const logoutButton = document.createElement("button");
+          logoutButton.textContent = "Đăng xuất";
+          logoutButton.style.marginLeft = "10px";
+          logoutButton.style.cursor = "pointer";
+          logoutButton.addEventListener("click", () => {
+            sessionStorage.removeItem("username");
+            window.location.href = "/login.html";
+          });
+
+          userElement.parentElement.appendChild(logoutButton);
+        } else {
+          // Ẩn menu xổ xuống nếu chưa đăng nhập
+          userDropdown.style.display = "none";
+          userElement.addEventListener("mouseenter", () => {
+            userDropdown.style.display = "none"; // Đảm bảo không hiển thị
+          });
+        }
+
+        cartIcon.addEventListener("click", () => {
+          if (!username) {
+            alert("Vui lòng đăng nhập để xem giỏ hàng!");
+            window.location.href = "/login.html";
+          } else {
+            window.location.href = "/cart.html";
+          }
+        });
+
+        document
+          .getElementById("searchForm")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const query = document.getElementById("searchInput").value.trim();
+
+            if (!query) {
+              alert("Vui lòng nhập từ khóa tìm kiếm!");
+              return;
+            }
+
+            currentQuery = query;
+            currentPage = 1;
+            await fetchProducts();
+          });
+
+        fetchProducts();
+      });
+
+      async function fetchProducts() {
+        const productList = document.getElementById("product-list");
+        const pagination = document.getElementById("pagination");
+        let url = currentQuery
+          ? `/api/products/search?query=${encodeURIComponent(
+              currentQuery
+            )}&page=${currentPage}&limit=${limit}`
+          : `/api/products/page?page=${currentPage}&limit=${limit}`; // ✅ sửa dòng này
+
+        if (currentPriceRange) {
+          const [minPrice, maxPrice] = currentPriceRange.split("-");
+          url += `&minPrice=${minPrice || 0}&maxPrice=${maxPrice || ""}`;
+        }
+
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(
+              `HTTP error! Status: ${response.status}, Response: ${errorText}`
+            );
+          }
+
+          const { products, totalItems } = await response.json();
+          if (products.length === 0) {
+            productList.innerHTML = "<p>Không tìm thấy sản phẩm nào.</p>";
+            pagination.innerHTML = "";
+            return;
+          }
+
+          renderProducts(products);
+          renderPagination(totalItems);
+        } catch (error) {
+          console.error("Error loading products:", error);
+          productList.innerHTML = `<p>Failed to load products: ${error.message}. Please try again later.</p>`;
+          pagination.innerHTML = "";
+        }
+      }
+
+      function renderProducts(products) {
+        const productList = document.getElementById("product-list");
+        productList.innerHTML = "";
+        products.forEach((product) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.onclick = () => viewDetail(product.pid);
+
+          card.innerHTML = `
+            <div class="small_card" style="z-index: 1">
+              <i class="fa-solid fa-heart"></i>
+              <i class="fa-solid fa-share"></i>
+            </div>
+            <div class="image">
+              <img src="${product.pimage}" alt="${product.pname}" style="width: 220px; height: 190px" />
+            </div>
+            <div class="products_text">
+              <h2 style="font-size: 16px; width: 250px; height: 46px">${product.pname}</h2>
+              <h3>$ ${product.pprice}</h3>
+              <div class="products_star">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star-half-stroke"></i>
+              </div>
+              <a href="detail.html?pid=${product.pid}" class="btn">Add To Cart</a>
+            </div>`;
+          productList.appendChild(card);
+        });
+      }
+
+      function renderPagination(totalItems) {
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+        const totalPages = Math.ceil(totalItems / limit);
+
+        if (totalPages <= 1) return;
+
+        for (let i = 1; i <= totalPages; i++) {
+          const link = document.createElement("a");
+          link.textContent = i;
+          link.href = "#";
+          link.className = i === currentPage ? "active" : "";
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            currentPage = i;
+            fetchProducts();
+          });
+          pagination.appendChild(link);
+        }
+      }
+
+      function viewDetail(productId) {
+        window.location.href = `/detail.html?productId=${productId}`;
+      }
+
+      function filterByPrice() {
+        const priceRange = document.getElementById("priceRange").value;
+        currentPriceRange = priceRange;
+        currentPage = 1;
+        fetchProducts();
+      }
+    </script>
+  </body>
+</html>

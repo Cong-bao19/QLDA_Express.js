@@ -1,0 +1,357 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: "Arial", sans-serif;
+    background-color: #f5f5f5;
+}
+.container{
+    display: flex;
+}
+.header{
+    background-color: rgb(0, 28, 64);
+    color: white;
+    padding: 30px;
+    width: 100%;
+    height: 40px;
+}
+.header ul li{
+    list-style-type: none;
+    margin-bottom: -8px;
+    margin-right: 20px;
+    
+}
+.header ul li a{
+    float: right;
+    color: black;
+    text-decoration: none;
+    border: 1px solid rgb(0, 28, 64);
+    padding: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: yellow;
+    margin-top: -24px;
+}
+.header ul li a:hover{
+    color: red;
+}
+.container{
+    display: flex;
+}
+.menu { 
+    flex:1;
+    border-right: 3px solid #717171;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    flex-grow: 3;
+    max-width: calc(20% - 40px);
+    background-color: rgb(0, 28, 64);
+    border-radius: 5px;
+    margin-top: -60px;
+    height: 750px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.image{
+    max-width: 30%;
+    border-radius: 60%;
+    margin-top: 20px;
+}
+.menu ul li{
+    text-align: center;
+    color: white;
+}
+.menu ul h1{
+    text-align: center;
+    color: white;
+}
+.but0{
+    padding: 20px 40px;
+    border: 2px solid rgb(0, 28, 64);
+    background-color: rgb(0, 28, 64);
+    color: white;
+    border-radius: 10px; /* Độ cong của góc nút */
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-bottom: 10px;
+}
+.but0 img{
+    margin-right: 20px;
+}
+.but1{
+    padding: 20px 27px;
+    border: 2px solid rgb(0, 28, 64);
+    background-color: rgb(0, 28, 64);
+    color: white;
+    border-radius: 10px; /* Độ cong của góc nút */
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-bottom: 10px;
+}
+.but1 img{
+    margin-right: 20px;
+}
+.but2{
+    padding: 20px 32px;
+    border: 2px solid rgb(0, 28, 64);
+    background-color: rgb(0, 28, 64);
+    color: white;
+    border-radius: 10px; /* Độ cong của góc nút */
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-bottom: 10px;
+}
+.but2 img{
+    margin-right: 20px;
+}
+.but3{
+    padding: 20px 33px;
+    border: 2px solid rgb(0, 28, 64);
+    background-color: rgb(0, 28, 64);
+    color: white;
+    border-radius: 10px; /* Độ cong của góc nút */
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-bottom: 10px;
+}
+.but3 img{
+    margin-right: 20px;
+}
+.but4{
+    padding: 20px 30px;
+    border: 2px solid rgb(0, 28, 64);
+    background-color: rgb(0, 28, 64);
+    color: white;
+    border-radius: 10px; /* Độ cong của góc nút */
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-bottom: 10px;
+}
+.but4 img{
+    margin-right: 20px;
+}
+.but0:hover{
+    background-color: #717171;
+}
+.but1:hover{
+    background-color: #717171;
+}
+.but2:hover{
+    background-color: #717171;
+}
+.but3:hover{
+    background-color: #717171;
+}
+.but4:hover{
+    background-color: #717171;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+}
+.time{
+    width: 1236px;
+    height: 35px;
+    background-color: white;
+    margin-left: 20px;
+    border-radius: 5px;
+    border-left: 5px solid rgb(234, 234, 24);
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.sumofproduct{
+    width: 280px;
+    height: 100px;
+    background-color: white;
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+.sumoforder{
+    width: 280px;
+    height: 100px;
+    background-color: white;
+    margin-left: 340px;
+    margin-top: -100px;
+    border-radius: 5px;
+}
+.sumofmoney{
+    width: 280px;
+    height: 100px;
+    background-color: white;
+    margin-left: 660px;
+    margin-top: -100px;
+    border-radius: 5px;
+}
+.outofstock{
+    width: 275px;
+    height: 100px;
+    background-color: white;
+    margin-left: 980px;
+    margin-top: -100px;
+    border-radius: 5px;
+}
+.sumofproduct ul li a{
+    background-color: #b9ffd3;
+    border-radius: .375rem;
+    padding: 15px;
+}
+.sumoforder ul li a{
+    background-color: #adcbf3;
+    border-radius: .375rem;
+    padding: 15px;
+}
+.sumofmoney ul li a{
+    background-color:#fde1c3;
+    border-radius: .375rem;
+    padding: 15px;
+}
+.outofstock ul li a{
+    background-color: #f9baba;
+    border-radius: .375rem;
+    padding: 15px;
+}
+.topsales{
+    width: 1236px;
+    height: 250px;
+    background-color: white;
+    margin-left: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.topsales hr{
+    margin-left: 20px;
+    width: 1200px;
+    border-color:yellow;
+}
+.custom-table {
+    width: 95%; /* Độ rộng của bảng */
+    border-collapse: collapse; /* Gộp các đường biên */
+} 
+.custom-table th,
+.custom-table td {
+    border: 1px solid #ddd; /* Đường viền của ô */
+    padding: 8px; /* Khoảng cách bên trong của ô */
+}
+.custom-table th {
+    background-color: #f2f2f2; /* Màu nền của tiêu đề cột */
+} 
+.custom-table td {
+    text-align: center; /* Căn lề trái của nội dung */
+}
+.sumoforder2{
+    width: 1236px;
+    height: 300px;
+    background-color: white;
+    margin-left: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.sumoforder2 hr{
+    margin-left: 20px;
+    width: 1200px;
+    border-color:yellow;
+}
+.order-table {
+    width: 95%; /* Độ rộng của bảng */
+    border-collapse: collapse; /* Gộp các đường biên */
+} 
+.order-table th,
+.order-table td {
+    border: 1px solid #ddd; /* Đường viền của ô */
+    padding: 8px; /* Khoảng cách bên trong của ô */
+}
+.order-table th {
+    background-color: #f2f2f2; /* Màu nền của tiêu đề cột */
+} 
+.order-table td {
+    text-align: center; /* Căn lề trái của nội dung */
+}
+.stock{
+    width: 1236px;
+    height: 300px;
+    background-color: white;
+    margin-left: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.stock hr{
+    margin-left: 20px;
+    width: 1200px;
+    border-color:yellow;
+}
+.stock-table {
+    width: 95%; /* Độ rộng của bảng */
+    border-collapse: collapse; /* Gộp các đường biên */
+} 
+.stock-table th,
+.stock-table td {
+    border: 1px solid #ddd; /* Đường viền của ô */
+    padding: 8px; /* Khoảng cách bên trong của ô */
+}
+.stock-table th {
+    background-color: #f2f2f2; /* Màu nền của tiêu đề cột */
+} 
+.stock-table td {
+    text-align: center; /* Căn lề trái của nội dung */
+}
+.main .stock-table tbody tr td c{
+    background-color: rgb(239, 191, 191);
+    color: rgb(239, 106, 106);
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    vertical-align: baseline;
+    padding: 7px;
+    white-space: nowrap;
+    border-radius: 0.25rem;
+}
+.chart{
+    width: 600px;
+    height: 400px;
+    background-color: white;
+    margin-left: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.chart hr{
+    margin-left: 20px;
+    width: 550px;
+    border-color:yellow;
+}
+#canvas{
+    width: 100%;
+}
+.chart2{
+    width: 600px;
+    height: 400px;
+    background-color: white;
+    margin-left: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.chart2 hr{
+    margin-left: 20px;
+    width: 550px;
+    border-color:yellow;
+}
+#barne{
+    width: 100%;
+}
+.merge{
+    display: flex;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BKN - SHOES</title>
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="shortcut icon" href="image/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="login_form" id="login_form">
+      <div class="left">
+        <img src="images/shoes.png" alt="Shoes Logo" />
+      </div>
+      <div class="right">
+        <h1>Đăng nhập!</h1>
+        <p id="error" style="color: red"></p>
+        <form id="loginForm">
+          <p>Tên người dùng</p>
+          <div class="user">
+            <i class="fa-solid fa-user"></i>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Tên đăng nhập"
+              class="username"
+              required
+            />
+          </div>
+          <p class="passworg_tag">Mật khẩu</p>
+          <div class="password">
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Mật khẩu"
+              required
+            />
+          </div>
+          <p class="forget">Quên mật khẩu?</p>
+          <button type="submit">Đăng nhập</button>
+        </form>
+        <p style="margin-top: 10px">
+          Bạn chưa có tài khoản?
+          <a
+            href="register.html"
+            style="color: red; margin-left: 40px; font-size: 18px"
+            class="register-link"
+            >Đăng ký</a
+          >
+        </p>
+      </div>
+    </div>
+    <script>
+      // Hiện popup nếu có lỗi từ URL
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      const errorParam = getQueryParam("error");
+      if (errorParam === "needAdmin") {
+        alert("Bạn cần quyền admin để truy cập trang này!");
+      } else if (errorParam === "notLoggedIn") {
+        alert("Bạn chưa đăng nhập. Vui lòng đăng nhập để tiếp tục.");
+      }
+
+      // Xử lý submit form login
+      const form = document.getElementById("loginForm");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        try {
+          const response = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            sessionStorage.setItem("username", result.username);
+            if (result.redirectTo) {
+              window.location.href = result.redirectTo;
+            } else {
+              document.getElementById("error").textContent =
+                "Đăng nhập thành công nhưng không có trang chuyển hướng.";
+            }
+          } else {
+            document.getElementById("error").textContent =
+              result.message || "😢 Đăng nhập thất bại!";
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          document.getElementById("error").textContent =
+            "Có lỗi xảy ra. Vui lòng thử lại.";
+        }
+      });
+    </script>
+  </body>
+</html>

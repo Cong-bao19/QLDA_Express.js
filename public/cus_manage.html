@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý tài khoản</title>
+    <link rel="stylesheet" href="css/cus_manage.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <ul
+        style="
+          display: flex;
+          margin-left: 300px;
+          margin-top: -8px;
+          font-size: 15px;
+        "
+      >
+        <li class="trangchu">Trang chủ</li>
+        <li>Sản phẩm</li>
+        <li>Khuyến mãi</li>
+        <li>Liên hệ</li>
+      </ul>
+      <ul>
+        <li>
+          <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <div class="menu">
+        <ul>
+          <li>
+            <a href="#">
+              <img
+                src="https://i.pinimg.com/originals/78/46/75/7846752cfd7b02455fa07c42a5ab2f37.jpg"
+                class="image"
+                alt=""
+              />
+            </a>
+          </li>
+          <br />
+          <li
+            class="fa-solid fa-user"
+            style="
+              margin-left: 60px;
+              margin-bottom: 10px;
+              margin-right: 5px;
+              color: white;
+              font-size: 12px;
+            "
+          >
+            <!-- Tên người dùng -->
+          </li>
+          <li>Chào mừng bạn trở lại</li>
+          <br /><br />
+          <hr />
+          <br />
+          <h1>
+            <a href="control.html">
+              <button class="but0">
+                <i class="fa-solid fa-landmark"></i> Bảng điều khiển
+              </button>
+            </a>
+          </h1>
+          <h1>
+            <a href="cus_manage.html">
+              <button class="but1">
+                <i class="fa-solid fa-id-card"></i> Quản lý khách hàng
+              </button>
+            </a>
+          </h1>
+          <h1>
+            <a href="pro_manage.html">
+              <button class="but2">
+                <i class="fa-solid fa-box"></i> Quản lý sản phẩm
+              </button>
+            </a>
+          </h1>
+          <h1>
+            <a href="order_manage.html">
+              <button class="but3">
+                <i class="fa-solid fa-money-bill-1"></i> Quản lý đơn hàng
+              </button>
+            </a>
+          </h1>
+        </ul>
+      </div>
+
+      <div class="mainn">
+        <div class="button">
+          <button
+            style="
+              background-color: #008c04;
+              border: #008c04;
+              color: #a2ecb5;
+              width: 100px;
+              height: 40px;
+            "
+          >
+            <i class="fa-solid fa-file-excel"></i> Xuất Excel
+          </button>
+          <button
+            style="
+              background-color: #14a3cf;
+              border: #d0d0d0;
+              width: 100px;
+              height: 40px;
+            "
+          >
+            <i class="fa-solid fa-check"></i> Xác nhận
+          </button>
+          <button
+            style="
+              background-color: rgb(235, 25, 25);
+              border: #008c04;
+              color: #a2ecb5;
+              width: 100px;
+              height: 40px;
+            "
+          >
+            <i class="fa-solid fa-floppy-disk"></i> Lưu thay đổi
+          </button>
+        </div>
+
+        <br />
+        <hr class="line" />
+        <br />
+
+        <div class="find">
+          <li>Tìm kiếm:</li>
+          <input
+            type="text"
+            style="
+              border-radius: 6px;
+              height: 25px;
+              margin-top: -4px;
+              background-color: rgb(234, 233, 233);
+              margin-left: 5px;
+            "
+            placeholder="Nhập từ khóa tìm kiếm"
+          />
+        </div>
+
+        <div>
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th style="width: 15%">Mã khách hàng</th>
+                <th style="width: 19%">Tên khách hàng</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Số điện thoại</th>
+                <th style="width: 15%">Chức năng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Dữ liệu tài khoản sẽ được chèn động tại đây -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="time">
+      <ul style="display: flex; margin-left: 30px">
+        <li
+          style="
+            list-style-type: none;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 14px;
+          "
+        ></li>
+      </ul>
+      <ul style="display: flex; float: right; margin-right: 30px">
+        <li
+          style="
+            list-style-type: none;
+            margin-top: -16px;
+            font-weight: bold;
+            font-size: 14px;
+          "
+          class="time-display"
+        ></li>
+      </ul>
+    </div>
+
+    <!-- Modal chỉnh sửa -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close">×</span>
+        <h2>Chỉnh sửa khách hàng</h2>
+        <form id="editForm">
+          <input type="hidden" id="editUserId" />
+          <label>Tên khách hàng:</label>
+          <input type="text" id="editFullname" required /><br /><br />
+          <label>Username:</label>
+          <input type="text" id="editUsername" required /><br /><br />
+          <label>Password:</label>
+          <input type="text" id="editPassword" required /><br /><br />
+          <label>Số điện thoại:</label>
+          <input type="text" id="editPhone" required /><br /><br />
+          <button type="submit">Lưu</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tableBody = document.querySelector(".custom-table tbody");
+        const searchInput = document.querySelector(".find input");
+        const exportButton = document.querySelector(
+          ".button button:first-child"
+        );
+        const timeElement = document.querySelector(".time-display");
+        const editModal = document.getElementById("editModal");
+        const closeModal = document.querySelector(".close");
+        const editForm = document.getElementById("editForm");
+
+        // Cập nhật thời gian thực
+        const updateTime = () => {
+          const currentDate = new Date();
+          const formattedDate = currentDate.toLocaleString("vi-VN", {
+            weekday: "long",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          });
+          timeElement.textContent = formattedDate;
+        };
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Fetch dữ liệu người dùng
+        const fetchUsers = async () => {
+          try {
+            const response = await fetch("/account/users", {
+              headers: { "Content-Type": "application/json" },
+            });
+            if (!response.ok)
+              throw new Error("Không thể lấy danh sách người dùng");
+            return await response.json();
+          } catch (error) {
+            console.error("Error fetching users:", error);
+            alert("Không thể tải danh sách người dùng");
+            return [];
+          }
+        };
+
+        // Render bảng
+        const renderTable = (data) => {
+          tableBody.innerHTML = "";
+          data.forEach((user) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${user.userid}</td>
+              <td>${user.fullname}</td>
+              <td>${user.username}</td>
+              <td>${user.password}</td>
+              <td>${user.uPhone}</td>
+              <td style="width: 100px;">
+                <i class="fa-solid fa-trash" style="padding: 0 5px; color: blue; cursor: pointer;" onclick="deleteUser(${user.userid})"></i>
+                <i class="fa-solid fa-pen-to-square" style="padding: 0 5px; color: blue; cursor: pointer;" onclick="openEditModal(${user.userid}, '${user.fullname}', '${user.username}', '${user.password}', '${user.uPhone}')"></i>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        };
+
+        // Load dữ liệu ban đầu
+        fetchUsers().then((users) => {
+          renderTable(users);
+
+          // Tìm kiếm
+          searchInput.addEventListener("input", (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredUsers = users.filter(
+              (user) =>
+                user.fullname.toLowerCase().includes(searchTerm) ||
+                user.username.toLowerCase().includes(searchTerm) ||
+                user.uPhone.toLowerCase().includes(searchTerm)
+            );
+            renderTable(filteredUsers);
+          });
+
+          // Xuất Excel
+          exportButton.addEventListener("click", () => {
+            const worksheet = XLSX.utils.json_to_sheet(users);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+            XLSX.writeFile(workbook, "users.xlsx");
+          });
+        });
+
+        // Xóa người dùng
+        window.deleteUser = async (userId) => {
+          if (!confirm("Bạn có chắc chắn muốn xóa khách hàng này?")) return;
+          try {
+            const response = await fetch(`/account/users/${userId}`, {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+            });
+            if (!response.ok) throw new Error("Không thể xóa người dùng");
+            alert("Xóa người dùng thành công");
+            fetchUsers().then(renderTable);
+          } catch (error) {
+            console.error("Error deleting user:", error);
+            alert("Không thể xóa người dùng");
+          }
+        };
+
+        // Mở modal chỉnh sửa
+        window.openEditModal = (
+          userId,
+          fullname,
+          username,
+          password,
+          uPhone
+        ) => {
+          document.getElementById("editUserId").value = userId;
+          document.getElementById("editFullname").value = fullname;
+          document.getElementById("editUsername").value = username;
+          document.getElementById("editPassword").value = password;
+          document.getElementById("editPhone").value = uPhone;
+          editModal.style.display = "block";
+        };
+
+        // Đóng modal
+        closeModal.onclick = () => {
+          editModal.style.display = "none";
+        };
+
+        // Submit form chỉnh sửa
+        editForm.onsubmit = async (e) => {
+          e.preventDefault();
+          const userId = document.getElementById("editUserId").value;
+          const updatedUser = {
+            fullname: document.getElementById("editFullname").value,
+            username: document.getElementById("editUsername").value,
+            password: document.getElementById("editPassword").value,
+            uPhone: document.getElementById("editPhone").value,
+          };
+          try {
+            const response = await fetch(`/account/users/${userId}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(updatedUser),
+            });
+            if (!response.ok) throw new Error("Không thể cập nhật người dùng");
+            alert("Cập nhật người dùng thành công");
+            editModal.style.display = "none";
+            fetchUsers().then(renderTable);
+          } catch (error) {
+            console.error("Error updating user:", error);
+            alert("Không thể cập nhật người dùng");
+          }
+        };
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BKN - SHOES</title>
+    <link rel="stylesheet" href="css/account.css" />
+    <link rel="shortcut icon" href="image/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div
+      class="form-style-10"
+      style="
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url('https://i.pinimg.com/736x/4d/ef/ab/4defab87bb669dbe3ce8d88d78e6570b.jpg');
+        background-size: contain;
+        background-position: center;
+        height: 100vh;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+      "
+    >
+      <div
+        class="form-style-ss"
+        style="
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 1;
+          background-color: rgba(131, 116, 116, 0.8);
+          padding: 0px;
+        "
+      >
+        <form
+          id="account-form"
+          style="border: 2px solid #726767; border-radius: 10px"
+        >
+          <div
+            class="section"
+            style="
+              font-size: 18px;
+              color: #000;
+              font-weight: 1000;
+              padding: 10px;
+              margin-left: 45px;
+            "
+          >
+            <span style="background: #a65a5a">1</span> Tên đầy đủ
+          </div>
+          <div class="inner-wrap" style="padding: 10px; background: #9d9d9d">
+            <label>
+              Tên đầy đủ
+              <input type="text" id="name" name="name" value="" />
+            </label>
+          </div>
+
+          <div
+            class="section"
+            style="
+              font-size: 18px;
+              color: #000;
+              font-weight: 1000;
+              padding: 10px;
+              margin-left: 45px;
+            "
+          >
+            <span style="background: #a65a5a">2</span> Địa chỉ
+          </div>
+          <div class="inner-wrap" style="padding: 10px; background: #9d9d9d">
+            <label>
+              Địa chỉ
+              <textarea id="address" name="address" lang="vi"></textarea>
+            </label>
+          </div>
+
+          <div
+            class="section"
+            style="
+              font-size: 18px;
+              color: #000;
+              font-weight: 1000;
+              padding: 10px;
+              margin-left: 45px;
+            "
+          >
+            <span style="background: #a65a5a">3</span> Số điện thoại
+          </div>
+          <div class="inner-wrap" style="background: #9d9d9d; padding: 10px">
+            <label>
+              Số điện thoại
+              <input type="text" id="phone" name="phone" />
+            </label>
+          </div>
+
+          <div
+            class="section"
+            style="
+              font-size: 18px;
+              color: #000;
+              font-weight: 1000;
+              padding: 10px;
+              margin-left: 45px;
+            "
+          >
+            <span style="background: #a65a5a">4</span> Email
+          </div>
+          <div class="inner-wrap" style="background: #9d9d9d; padding: 10px">
+            <label>
+              Email
+              <input type="email" id="email" name="email" />
+            </label>
+          </div>
+
+          <div class="button-section">
+            <button type="submit" style="background: #c40f28">Cập nhật</button>
+            <span class="privacy-policy"></span>
+          </div>
+
+          <div
+            class="message"
+            style="font-size: 18px; color: red; padding: 2px 2px"
+          ></div>
+
+          <button
+            type="button"
+            onclick="window.location.href='Nike.html'"
+            style="background: #c40f28"
+          >
+            Quay về trang home
+          </button>
+        </form>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const messageDiv = document.querySelector(".message");
+        const username = sessionStorage.getItem("username");
+
+        if (!username) {
+          window.location.href = "/login.html";
+          return;
+        }
+
+        try {
+          const response = await fetch("/account/info", {
+            method: "GET",
+            credentials: "include",
+          });
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.message || "Không thể tải thông tin người dùng"
+            );
+          }
+
+          const userInfo = await response.json();
+          document.getElementById("name").value = userInfo.fullname || "";
+          document.getElementById("address").value = userInfo.address || "";
+          document.getElementById("phone").value = userInfo.uPhone || "";
+          document.getElementById("email").value = userInfo.email || "";
+        } catch (error) {
+          messageDiv.textContent = "Lỗi: " + error.message;
+        }
+
+        document
+          .getElementById("account-form")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const address = document.getElementById("address").value;
+            const phone = document.getElementById("phone").value;
+            const email = document.getElementById("email").value;
+
+            const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+            if (!emailPattern.test(email)) {
+              messageDiv.textContent = "Email không hợp lệ.";
+              messageDiv.style.color = "red";
+              return;
+            }
+
+            const data = { name, address, phone, email };
+
+            try {
+              const response = await fetch("/account/update", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify(data),
+              });
+
+              if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Cập nhật thất bại");
+              }
+
+              messageDiv.textContent = "Cập nhật thông tin thành công!";
+              messageDiv.style.color = "green";
+              setTimeout(() => (messageDiv.textContent = ""), 3000);
+            } catch (error) {
+              messageDiv.textContent = "Lỗi: " + error.message;
+              messageDiv.style.color = "red";
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

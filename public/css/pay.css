@@ -1,0 +1,244 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Basic styling for the whole page */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Navigation bar */
+nav {
+  background-color: #333;
+  color: white;
+  padding: 22px;
+  width: 100%;
+  height: 85px;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+/* User account form */
+.account-form {
+  flex-grow: 3; /* Chiếm 30% */
+  max-width: calc(30% - 40px);
+  margin: 0px auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.account-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.account-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.account-form input[type="text"],
+.account-form input[type="email"],
+.account-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 15px;
+}
+
+.account-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 15px;
+}
+
+.account-form button {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.title {
+  display: block;
+  width: 100%;
+  margin-top: 60px;
+  margin-left: auto; /* Sử dụng auto để căn giữa */
+  margin-right: auto; /* Sử dụng auto để căn giữa */
+}
+
+.form-img {
+  width: 100px;
+  height: 60px;
+  text-align: center;
+  margin-top: -25px;
+  margin-left: 50%;
+}
+
+.title h2 {
+  font-size: 26px;
+  color: darkorange;
+  margin-left: 48.6%;
+}
+.content-title {
+  margin-left: 33%;
+  font-size: 19px;
+  font-weight: 200;
+  padding: 10px;
+  margin-bottom: 30px;
+}
+ul li a {
+  text-decoration: none;
+  color: violet;
+}
+
+ul li {
+  margin-top: 10px;
+}
+
+.products {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  height: auto;
+  position: relative;
+  border-radius: 20px;
+}
+
+.detail-product {
+  position: relative;
+  /* Cố định kích thước cho phần tử cha */
+  width: 90%;
+  padding: 10px;
+  /* border: 1px solid #ccc; */
+  background-color: white;
+  margin-bottom: 10px;
+  height: 44%;
+  margin-left: 30px;
+}
+
+.detail-product img {
+  /* Đặt kích thước ảnh nếu cần */
+  max-width: 50%; /* Đặt chiều rộng tối đa cho hình ảnh */
+  float: left; /* Đẩy hình ảnh sang trái */
+  margin-right: 10px; /* Tạo khoảng cách giữa hình ảnh và tiêu đề */
+  height: 110px;
+  margin-bottom: 50px;
+}
+
+.detail-product h1 {
+  /* Thiết lập kiểu chữ, kích thước, màu sắc, v.v. cho tiêu đề */
+  font-size: 16px;
+  color: #d818ae; /* Màu chữ trắng */
+  margin: 10px 60px;
+  width: 260px;
+}
+
+/* Xóa float để tránh ảnh hưởng đến các phần tử khác */
+.detail-product::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.product-info {
+  display: flex; /* Sử dụng flexbox để sắp xếp các phần tử con theo hàng ngang */
+  align-items: center; /* Căn các phần tử con theo trục dọc */
+  box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.5);
+}
+
+.title-quantity {
+  margin-right: 20px; /* Tạo khoảng cách giữa tiêu đề và số lượng */
+  margin-bottom: 40px;
+}
+
+.price h2 {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.customer-info ul li {
+  font-size: 22px;
+  color: #e80eb9;
+  font-weight: 700;
+  list-style: none;
+}
+
+.checkout-form {
+  border: 1px solid rgb(221, 221, 221);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.checkout-form form {
+  display: flex;
+  flex-direction: column; /* Đặt hướng của flexbox là dọc */
+}
+
+.form-group {
+  display: flex; /* Sử dụng flexbox cho mỗi nhóm phần tử form */
+  flex-direction: column; /* Thiết lập hướng dọc cho mỗi nhóm */
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  flex: 1; /* Cho phần tử label co giãn để cân bằng với các phần tử input */
+}
+
+input,
+textarea,
+select {
+  flex: 2;
+  margin-left: 10px;
+  padding: 8px;
+  border: 2px solid #9b1261;
+}
+
+button {
+  align-self: flex-end;
+  margin-top: 20px;
+  width: 100px;
+  height: 38px;
+  background: linear-gradient(to right, #c72092, #983dff);
+  color: #0b0a0a;
+  font-weight: 600;
+}
+
+.checkout-form label {
+  font-weight: bold;
+  color: #c72092; /* Màu chữ đen */
+  margin-bottom: 5px; /* Khoảng cách giữa các nhãn */
+  display: block; /* Đặt hiển thị là khối để các nhãn xuất hiện trên mỗi dòng */
+}
+
+.total-price {
+  display: flex;
+  justify-content: flex-end;
+}
+.total-price h1 {
+  width: 120px;
+}

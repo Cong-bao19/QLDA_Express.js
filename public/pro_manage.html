@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý sản phẩm</title>
+    <link rel="stylesheet" href="css/pro_manage.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+      }
+      .product-image {
+        width: 50px;
+        height: auto;
+      }
+      .button-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .button-group button {
+        height: 40px;
+        padding: 0 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .main-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .main-title .left-title {
+        font-weight: bold;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <ul
+        style="
+          display: flex;
+          margin-left: 300px;
+          margin-top: -8px;
+          font-size: 15px;
+        "
+      >
+        <li class="trangchu">Trang chủ</li>
+        <li>Sản phẩm</li>
+        <li>Khuyến mãi</li>
+        <li>Liên hệ</li>
+      </ul>
+      <ul>
+        <li>
+          <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <div class="menu">
+        <!-- Menu bên trái -->
+        <ul>
+          <li>
+            <a href="#"
+              ><img
+                src="https://i.pinimg.com/originals/78/46/75/7846752cfd7b02455fa07c42a5ab2f37.jpg"
+                class="image"
+                alt=""
+            /></a>
+          </li>
+          <br />
+          <li
+            class="fa-solid fa-user"
+            style="
+              margin-left: 60px;
+              margin-bottom: 10px;
+              margin-right: 5px;
+              color: white;
+              font-size: 12px;
+            "
+          ></li>
+          <li>Chào mừng bạn trở lại</li>
+          <br /><br />
+          <hr />
+          <br />
+          <h1>
+            <a href="control.html"
+              ><button class="but0">
+                <i class="fa-solid fa-landmark"></i> Bảng điều khiển
+              </button></a
+            >
+          </h1>
+          <h1>
+            <a href="cus_manage.html"
+              ><button class="but1">
+                <i class="fa-solid fa-id-card"></i> Quản lý khách hàng
+              </button></a
+            >
+          </h1>
+          <h1>
+            <a href="pro_manage.html"
+              ><button class="but2">
+                <i class="fa-solid fa-box"></i> Quản lý sản phẩm
+              </button></a
+            >
+          </h1>
+          <h1>
+            <a href="order_manage.html"
+              ><button class="but3">
+                <i class="fa-solid fa-money-bill-1"></i> Quản lý đơn hàng
+              </button></a
+            >
+          </h1>
+        </ul>
+      </div>
+
+      <div class="mainn">
+        <div class="main-title">
+          <div class="left-title">Danh sách sản phẩm</div>
+          <div
+            class="time-display"
+            style="font-size: 14px; font-weight: bold"
+          ></div>
+        </div>
+
+        <div class="button-group">
+          <a href="/create_product">
+            <button
+              style="background-color: #008c04; border: none; color: #fff"
+            >
+              <i class="fa-solid fa-plus"></i> Tạo sản phẩm mới
+            </button>
+          </a>
+          <button
+            style="background-color: #14a3cf; border: none; color: #fff"
+            onclick="exportToExcel()"
+          >
+            <i class="fa-solid fa-file-excel"></i> Xuất Excel
+          </button>
+          <button style="background-color: #eb1919; border: none; color: #fff">
+            <i class="fa-solid fa-floppy-disk"></i> Lưu thay đổi
+          </button>
+        </div>
+
+        <div class="find" style="margin-bottom: 10px">
+          <label for="searchInput">Tìm kiếm:</label>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Nhập tên sản phẩm"
+            style="
+              border-radius: 6px;
+              height: 25px;
+              background-color: rgb(234, 233, 233);
+              margin-left: 5px;
+            "
+          />
+        </div>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th style="width: 10%">Mã sản phẩm</th>
+              <th style="width: 20%">Tên sản phẩm</th>
+              <th style="width: 10%">Ảnh</th>
+              <th style="width: 10%">Kích thước</th>
+              <th style="width: 10%">Số lượng</th>
+              <th style="width: 15%">Giá tiền</th>
+              <th style="width: 15%">Danh mục</th>
+              <th style="width: 10%">Chức năng</th>
+            </tr>
+          </thead>
+          <tbody id="productTableBody">
+            <!-- Sản phẩm sẽ được chèn động tại đây -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal xác nhận xóa -->
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Xác nhận xóa sản phẩm</h2>
+        <p>Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+        <button onclick="confirmDelete()">Xóa</button>
+        <button onclick="closeDeleteModal()">Hủy</button>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+      let currentProductId = null;
+      let allProducts = [];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const tableBody = document.getElementById("productTableBody");
+        const searchInput = document.getElementById("searchInput");
+        const timeElement = document.querySelector(".time-display");
+        const deleteModal = document.getElementById("deleteModal");
+        const closeModal = document.querySelector(".close");
+
+        // Cập nhật thời gian
+        const updateTime = () => {
+          const currentDate = new Date();
+          const formattedDate = currentDate.toLocaleString("vi-VN", {
+            weekday: "long",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          });
+          timeElement.textContent = formattedDate;
+        };
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Lấy danh sách sản phẩm
+        const fetchProducts = async () => {
+          try {
+            const response = await fetch("/api/products", {
+              headers: { "Content-Type": "application/json" },
+            });
+            if (!response.ok)
+              throw new Error("Không thể lấy danh sách sản phẩm");
+            const data = await response.json();
+            allProducts = data;
+            renderTable(data);
+          } catch (error) {
+            console.error("Lỗi:", error);
+            alert("Không thể tải danh sách sản phẩm");
+          }
+        };
+
+        // Render bảng
+        const renderTable = (data) => {
+          tableBody.innerHTML = "";
+          data.forEach((product) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${product.pid}</td>
+              <td>${product.pname}</td>
+              <td><img src="${product.pimage}" class="product-image" alt="${
+              product.pname
+            }"/></td>
+              <td>${product.psize}</td>
+              <td>${product.pquantity}</td>
+              <td>${product.pprice.toLocaleString("vi-VN")} VNĐ</td>
+              <td>${product.category_id}</td>
+              <td>
+                <i class="fa-solid fa-trash" style="color: blue; cursor: pointer;" onclick="openDeleteModal(${
+                  product.pid
+                })"></i>
+                <i class="fa-solid fa-pen-to-square" style="color: blue; cursor: pointer;" onclick="window.location.href='/update_product/${
+                  product.pid
+                }'"></i>
+              </td>`;
+            tableBody.appendChild(row);
+          });
+        };
+
+        searchInput.addEventListener("input", (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          const filtered = allProducts.filter((p) =>
+            p.pname.toLowerCase().includes(searchTerm)
+          );
+          renderTable(filtered);
+        });
+
+        fetchProducts();
+      });
+
+      function exportToExcel() {
+        alert("Xuất Excel đang được thực hiện...");
+      }
+
+      function openDeleteModal(pid) {
+        currentProductId = pid;
+        document.getElementById("deleteModal").style.display = "block";
+      }
+
+      function closeDeleteModal() {
+        document.getElementById("deleteModal").style.display = "none";
+      }
+
+      function confirmDelete() {
+        alert("Đã xóa sản phẩm có ID: " + currentProductId);
+        closeDeleteModal();
+      }
+    </script>
+  </body>
+</html>

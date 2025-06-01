@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cập nhật sản phẩm</title>
+    <link rel="stylesheet" href="/public/css/style.css" />
+  </head>
+  <body>
+    <h1>Cập nhật sản phẩm</h1>
+    <form action="/api/products/<%= product.pid %>" method="POST">
+      <input type="hidden" name="_method" value="PUT" />
+      <label>Product Name:</label>
+      <input
+        type="text"
+        name="pname"
+        value="<%= product.pname %>"
+        required
+      /><br /><br />
+
+      <label>Product Image (URL):</label>
+      <input
+        type="text"
+        name="pimage"
+        value="<%= product.pimage %>"
+        required
+      /><br /><br />
+
+      <label>Size:</label>
+      <input
+        type="text"
+        name="psize"
+        value="<%= product.psize %>"
+        required
+      /><br /><br />
+
+      <label>Quantity:</label>
+      <input
+        type="number"
+        name="pquantity"
+        value="<%= product.pquantity %>"
+        required
+      /><br /><br />
+
+      <label>Price:</label>
+      <input
+        type="number"
+        name="pprice"
+        step="0.01"
+        value="<%= product.pprice %>"
+        required
+      /><br /><br />
+
+      <label>Category ID:</label>
+      <input
+        type="number"
+        name="category_id"
+        value="<%= product.category_id %>"
+        required
+      /><br /><br />
+
+      <label>Description:</label>
+      <textarea name="pdesc" rows="4" cols="50"><%= product.pdesc %></textarea
+      ><br /><br />
+
+      <button type="submit">Update Product</button>
+    </form>
+    <a href="/pro_manage.html">Quay lại</a>
+  </body>
+</html>

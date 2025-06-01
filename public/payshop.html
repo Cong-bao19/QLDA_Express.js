@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BKN - SHOES</title>
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="shortcut icon" href="image/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/pay.css" />
+    <style>
+      .total-price {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 20px;
+      }
+      .total-price h1 {
+        margin: 0 20px 0 0;
+        font-size: 18px;
+        color: #333;
+      }
+      .tongtien {
+        font-size: 24px;
+        font-weight: bold;
+        color: #c72092;
+        padding: 10px 20px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: auto;
+        height: auto;
+        white-space: nowrap;
+      }
+      .product-form {
+        padding: 20px;
+        margin-left: 100px;
+        max-width: 60%;
+      }
+      .detail-product {
+        margin-bottom: 20px;
+      }
+      .product-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      .product-info img {
+        margin-right: 20px;
+      }
+      .title-quantity,
+      .price {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul style="float: left; margin-left: 125px">
+        <li
+          style="
+            font-size: 26px;
+            color: #c72092;
+            margin: 4px 14px;
+            cursor: pointer;
+          "
+        >
+          <span>BKN</span> Shoes
+        </li>
+        <li>
+          <a href="Nike.html" style="font-size: 16px; color: #fff">Trang chủ</a>
+        </li>
+        <li>
+          <a href="cart.html" style="font-size: 16px; color: #fff">Giỏ hàng</a>
+        </li>
+      </ul>
+
+      <ul style="float: right; margin-right: 100px">
+        <li>
+          <a
+            href="https://wearebraindead.com/collections/oakley-factory-team?gad_source=1&gclid=Cj0KCQjwztOwBhD7ARIsAPDKnkBCuBFU-y6NpWZOfEMNrAHu8sAo-2yvJPSZpzXiwEopG1aEe_H6V0MaAht2EALw_wcB"
+            style="font-size: 16px; color: #fff"
+            >Giới thiệu</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.facebook.com/dut.itf"
+            style="font-size: 16px; color: #fff"
+            >Liên hệ</a
+          >
+        </li>
+        <li><a href="logout" style="font-size: 16px">Đăng xuất</a></li>
+      </ul>
+    </nav>
+
+    <div class="title">
+      <img
+        class="form-img"
+        src="https://www.mungbaobao.com/upload/news/2019/05/19/12/08/14/icon-thanh-toan-1.png?v=1"
+        alt=""
+      />
+      <br />
+      <h2>Thanh toán</h2>
+      <br />
+      <p class="content-title">
+        Vui lòng kiểm tra thông tin khách hàng và sản phẩm trước khi
+        <strong style="color: rgb(201, 15, 15)">Đặt hàng</strong>
+      </p>
+    </div>
+
+    <div class="content" style="display: flex">
+      <div
+        class="product-form"
+        style="
+          flex-grow: 6;
+          max-width: calc(60% - 40px);
+          margin-right: -17px;
+          background-color: white;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <div class="customer-info">
+          <h1><span style="color: #c72092">BKN</span> Shop</h1>
+          <ul style="margin-top: 13px; text-align: center">
+            <li>Giỏ hàng</li>
+          </ul>
+          <div class="products" style="margin-top: 35px">
+            <div class="detail-product" id="product-list">
+              <!-- Sản phẩm sẽ được thêm động bằng JavaScript -->
+            </div>
+            <div class="total-price">
+              <h1>Tổng tiền</h1>
+              <h2 class="tongtien">$ 0.0</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="account-form">
+        <li
+          style="
+            font-size: 22px;
+            color: #e80eb9;
+            font-weight: 700;
+            list-style: none;
+            margin-bottom: 15px;
+          "
+        >
+          Thông tin mua hàng
+        </li>
+        <div class="checkout-form">
+          <form id="checkout-form">
+            <div class="form-group">
+              <label for="name">Họ và tên:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Nguyễn Anh Khoa"
+                style="border: 2px solid #9b1261"
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Số điện thoại:</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                placeholder="0774488418"
+              />
+            </div>
+            <div class="form-group">
+              <label for="address">Địa chỉ giao hàng:</label>
+              <textarea
+                id="address"
+                name="address"
+                rows=""
+                required
+                placeholder="Phú Lộc , Thừa Thiên Huế"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="delivery" style="">Chọn hình thức giao hàng:</label>
+              <select
+                id="delivery"
+                name="delivery"
+                required
+                style="border: 2px solid #9b1261"
+              >
+                <option value="standard">Giao hàng tiêu chuẩn ($2)</option>
+                <option value="express">Giao hàng nhanh ($4)</option>
+                <option value="self-pickup">Tự đến lấy hàng</option>
+              </select>
+            </div>
+            <button class="btn-submit" type="submit">Đặt hàng</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        // Fetch dữ liệu giỏ hàng từ API
+        async function fetchCart() {
+          try {
+            const response = await fetch("/api/cart", {
+              method: "GET",
+              credentials: "include",
+            });
+            if (!response.ok) {
+              throw new Error("Không thể lấy dữ liệu giỏ hàng");
+            }
+            const cartData = await response.json();
+            return cartData.cartDetails || [];
+          } catch (error) {
+            console.error("Lỗi khi lấy giỏ hàng:", error);
+            return [];
+          }
+        }
+
+        // Hiển thị sản phẩm
+        function renderProductsFromStorage() {
+          const productList = document.getElementById("product-list");
+          const totalPriceElement = document.querySelector(".tongtien");
+          const products =
+            JSON.parse(localStorage.getItem("checkout_products")) || [];
+          const totalMoney =
+            parseFloat(localStorage.getItem("checkout_total")) || 0;
+
+          productList.innerHTML = "";
+
+          if (products.length === 0) {
+            productList.innerHTML =
+              "<p style='text-align: center; color: #888;'>Giỏ hàng trống</p>";
+            totalPriceElement.textContent = "$ 0.0";
+            return;
+          }
+
+          products.forEach((item) => {
+            const productInfo = document.createElement("div");
+            productInfo.className = "product-info";
+            productInfo.innerHTML = `
+      <img src="${
+        item.pimage
+      }" style="width: 110px; height: 110px; margin-right: 20px;" alt="">
+      <div class="title-quantity">
+        <h1>${item.pname}</h1>
+        <h1>Số lượng: ${item.quantity}</h1>
+      </div>
+      <div class="price">
+        <h2 class="total-priceh2">$ ${(item.price * item.quantity).toFixed(
+          1
+        )}</h2>
+      </div>
+    `;
+            productList.appendChild(productInfo);
+          });
+
+          totalPriceElement.textContent = "$ " + totalMoney.toFixed(1);
+        }
+
+        // Xử lý form đặt hàng
+        // Xử lý form đặt hàng
+        document
+          .getElementById("checkout-form")
+          .addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const products =
+              JSON.parse(localStorage.getItem("checkout_products")) || [];
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const address = document.getElementById("address").value;
+            const delivery = document.getElementById("delivery").value;
+            const totalPriceElement = document.querySelector(".tongtien");
+            const totalPrice =
+              parseFloat(totalPriceElement.textContent.replace("$", "")) || 0;
+
+            if (!name || !phone || !address) {
+              alert("Vui lòng điền đầy đủ thông tin!");
+              return;
+            }
+
+            const data = {
+              products: products.map((item) => ({
+                productId: item.productId || item.product?.pid,
+                quantity: item.quantity,
+                price: item.price || item.product?.pprice,
+              })),
+              name,
+              phone,
+              address,
+              delivery,
+              totalPrice,
+            };
+
+            try {
+              const authCheck = await fetch("/api/auth/check", {
+                method: "GET",
+                credentials: "include",
+              });
+              if (!authCheck.ok) {
+                alert("Bạn cần đăng nhập để thanh toán!");
+                window.location.href = "/login";
+                return;
+              }
+
+              const response = await fetch("/api/orders/checkout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify(data),
+              });
+
+              if (!response.ok) {
+                const errorData = await response.json();
+                console.log("Error response from server:", errorData);
+                throw new Error(
+                  `Lỗi khi thanh toán: ${
+                    errorData.message || response.statusText
+                  }`
+                );
+              }
+
+              const result = await response.json();
+              // ✅ Xoá dữ liệu tạm sau khi đặt hàng
+              localStorage.removeItem("checkout_products");
+              localStorage.removeItem("checkout_total");
+
+              window.location.href = `/Nike.html`;
+            } catch (error) {
+              console.error("Lỗi khi đặt hàng:", error);
+              alert("Đặt hàng thất bại: " + error.message);
+            }
+          });
+
+        // Tải dữ liệu và hiển thị
+        renderProductsFromStorage();
+      });
+    </script>
+  </body>
+</html>

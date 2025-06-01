@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BKN - SHOES</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="image/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="login_form" id="register_form">
+      <div class="left">
+        <img
+          src="images/shoes4.png"
+          alt="Shoes Logo"
+          style="width: 90%; height: auto"
+        />
+      </div>
+      <div class="right">
+        <h1>Đăng kí tài khoản!</h1>
+        <p id="message" style="color: red"></p>
+        <form id="registerForm" onsubmit="return validateForm()">
+          <p>Tên người dùng</p>
+          <div class="user">
+            <i class="fa-solid fa-user"></i>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Tên người dùng"
+              class="username"
+              required
+            />
+          </div>
+          <p class="passworg_tag">Mật khẩu</p>
+          <div class="password">
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Mật khẩu"
+              required
+            />
+          </div>
+          <p style="padding-top: 10px">Xác nhận mật khẩu</p>
+          <div class="password">
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              id="confirm_password"
+              name="confirm_password"
+              placeholder="Xác nhận mật khẩu"
+              required
+            />
+          </div>
+          <p id="password_error" style="color: red; display: none">
+            Mật khẩu không khớp.
+          </p>
+          <button type="submit">Đăng kí</button>
+        </form>
+        <p style="margin-top: 10px">
+          Bạn đã có tài khoản?
+          <a
+            href="login.html"
+            style="color: red; margin-left: 25px; font-size: 18px"
+            >Đăng nhập ngay</a
+          >
+        </p>
+      </div>
+    </div>
+    <script>
+      function validateForm() {
+        const password = document.getElementById("password").value;
+        const confirmPassword =
+          document.getElementById("confirm_password").value;
+        const passwordError = document.getElementById("password_error");
+
+        if (password.length < 6) {
+          passwordError.textContent = "Mật khẩu phải có ít nhất 6 ký tự.";
+          passwordError.style.display = "block";
+          return false;
+        } else if (password !== confirmPassword) {
+          passwordError.textContent = "Mật khẩu không khớp.";
+          passwordError.style.display = "block";
+          return false;
+        } else {
+          passwordError.style.display = "none";
+          return true;
+        }
+      }
+
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          if (!validateForm()) return;
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          const formData = {
+            username: username,
+            password: password,
+          };
+
+          try {
+            const response = await fetch("/api/auth/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+              const errorText = await response.text();
+              throw new Error(
+                `HTTP error! Status: ${response.status}, Response: ${errorText}`
+              );
+            }
+
+            const result = await response.json();
+
+            if (response.status === 201) {
+              document.getElementById("message").textContent =
+                result.message || "Đăng ký thành công!";
+              document.getElementById("message").style.color = "green";
+              setTimeout(() => (window.location.href = "/login.html"), 2000);
+            } else {
+              document.getElementById("message").textContent =
+                result.message || "Đăng ký thất bại!";
+              document.getElementById("message").style.color = "red";
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            document.getElementById("message").textContent =
+              "Đăng ký thất bại: " + error.message;
+            document.getElementById("message").style.color = "red";
+          }
+        });
+    </script>
+  </body>
+</html>

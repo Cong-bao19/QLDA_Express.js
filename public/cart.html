@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BKN - SHOES</title>
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="shortcut icon" href="image/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/cart.css" />
+  </head>
+  <body>
+    <header id="site-header">
+      <div class="container">
+        <a
+          href="Nike.html"
+          style="display: inline-block; font-size: 20px; margin-right: 155px"
+        >
+          <i class="fas fa-home"></i> Home
+        </a>
+        <h1 style="display: inline-block; font-size: 27px; color: red">
+          Shopping cart <span> in BKN Shoes</span>
+        </h1>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="cart">
+        <!-- Sản phẩm trong giỏ hàng sẽ được thêm động bằng JavaScript -->
+      </section>
+    </div>
+
+    <footer id="site-footer" style="background-color: #eee">
+      <div class="container clearfix">
+        <div class="left">
+          <h2 class="subtotal">Tổng sản phẩm: <span>0</span></h2>
+        </div>
+        <div class="right">
+          <h1 class="total">Tổng tiền: <span>$0.0</span></h1>
+          <button class="btn" id="checkout-btn">Thanh toán</button>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        // Lấy dữ liệu giỏ hàng từ API
+        async function fetchCart() {
+          try {
+            const response = await fetch("/api/cart", {
+              method: "GET",
+              credentials: "include",
+            });
+            if (!response.ok) {
+              throw new Error("Không thể lấy dữ liệu giỏ hàng");
+            }
+            const cartData = await response.json();
+            return cartData;
+          } catch (error) {
+            console.error("Lỗi khi lấy giỏ hàng:", error);
+            return { cart: null, cartDetails: [] };
+          }
+        }
+
+        // Hiển thị giỏ hàng
+        async function renderCart() {
+          const { cart, cartDetails } = await fetchCart();
+          const cartSection = document.getElementById("cart");
+          const itemCountElement = document.querySelector(".subtotal span");
+          const totalMoneyElement = document.querySelector(".total span");
+
+          cartSection.innerHTML = "";
+
+          if (!cartDetails || cartDetails.length === 0) {
+            cartSection.innerHTML = "<p>Giỏ hàng trống</p>";
+            itemCountElement.textContent = "0";
+            totalMoneyElement.textContent = "$0.0";
+            totalMoneyElement.style.display = "inline-block";
+            return;
+          }
+
+          cartDetails.forEach((cartDetail, index) => {
+            const product = cartDetail.product;
+            const totalPrice = product.pprice * cartDetail.quantity;
+
+            const article = document.createElement("article");
+            article.className = "product";
+            article.innerHTML = `
+              <div class="product-content">
+                <header>
+                  <a class="remove" data-product-id="${product.pid}">
+                    <img style="width: 240px; height: 192px" src="${
+                      product.pimage
+                    }" alt="">
+                    <h3>Xóa sản phẩm</h3>
+                  </a>
+                </header>
+                <div class="content">
+                  <h1>${product.pname}</h1>
+                  <h1 style="font-size: 15px">${product.pdesc}</h1>
+                </div>
+                <footer class="content" style="height: 45px;">
+                  <button class="qt-minus" style="background: #1cc1e4; font-size: 15px;">-</button>
+                  <span class="qt">${cartDetail.quantity}</span>
+                  <button class="qt-plus" style="background: #1cc1e4; font-size: 15px;">+</button>
+                  <h2 class="full-price">$ ${totalPrice.toFixed(1)}</h2>
+                  <input type="hidden" class="hidden-price" value="${
+                    product.pprice
+                  }">
+                  <input type="checkbox" class="product-checkbox"
+                    data-product-id="${product.pid}"
+                    data-price="${product.pprice}"
+                    data-id="${cart.id}"
+                    style="margin-left: 22px; vertical-align: middle; float: right; display: block; text-align: center; width: 37px; height: 18px; margin-top: 13px;">
+                </footer>
+              </div>
+            `;
+            cartSection.appendChild(article);
+          });
+
+          // Cập nhật tổng số sản phẩm
+          const totalItems = cartDetails.reduce(
+            (sum, detail) => sum + detail.quantity,
+            0
+          );
+          itemCountElement.textContent = totalItems;
+
+          initializeCartEvents();
+        }
+
+        function initializeCartEvents() {
+          const minusButtons = document.querySelectorAll("footer .qt-minus");
+          const quantityElements = document.querySelectorAll("footer .qt");
+          const plusButtons = document.querySelectorAll("footer .qt-plus");
+          const priceElements = document.querySelectorAll("footer .full-price");
+          const hiddenPriceElements = document.querySelectorAll(
+            "footer .hidden-price"
+          );
+          const checkboxes = document.querySelectorAll(".product-checkbox");
+          const itemCountElement = document.querySelector(".subtotal span");
+          const totalMoneyElement = document.querySelector(".total span");
+          const checkoutButton = document.getElementById("checkout-btn");
+
+          let prices = [];
+          hiddenPriceElements.forEach(function (hiddenPriceElement) {
+            prices.push(parseFloat(hiddenPriceElement.value));
+          });
+
+          function updatePrice(index, currentQuantity) {
+            const price = prices[index];
+            const totalPrice = currentQuantity * price;
+            priceElements[index].textContent = "$ " + totalPrice.toFixed(1);
+          }
+
+          function calculateTotal() {
+            let totalMoney = 0;
+            quantityElements.forEach(function (quantityElement, index) {
+              totalMoney +=
+                prices[index] * parseInt(quantityElement.textContent);
+            });
+            totalMoneyElement.textContent = "$ " + totalMoney.toFixed(1);
+            totalMoneyElement.style.display = "inline-block";
+          }
+
+          function updateItemCount() {
+            let totalItems = 0;
+            quantityElements.forEach(function (quantityElement) {
+              totalItems += parseInt(quantityElement.textContent);
+            });
+            itemCountElement.textContent = totalItems;
+          }
+
+          checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+              if (this.checked) {
+                const cartID = this.dataset.id;
+                const productID = this.dataset.productId;
+                const priceP = this.dataset.price;
+                const quantityElement =
+                  this.closest(".product").querySelector(".qt");
+                const newQuantity = parseInt(quantityElement.textContent);
+                updateCart(cartID, productID, newQuantity, priceP);
+              }
+            });
+          });
+
+          minusButtons.forEach(function (minusButton, index) {
+            minusButton.addEventListener("click", function () {
+              const quantityElement = quantityElements[index];
+              let currentQuantity = parseInt(quantityElement.textContent);
+              const cartID = checkboxes[index].dataset.id;
+              const productID = checkboxes[index].dataset.productId;
+              const priceP = checkboxes[index].dataset.price;
+
+              if (currentQuantity > 1) {
+                currentQuantity -= 1;
+                quantityElement.textContent = currentQuantity;
+                updatePrice(index, currentQuantity);
+                updateCart(cartID, productID, currentQuantity, priceP);
+                updateItemCount();
+                calculateTotal();
+              } else {
+                const productToRemove = minusButton.closest(".product");
+                productToRemove.remove();
+                updateCart(cartID, productID, 0, priceP);
+                updateItemCount();
+                calculateTotal();
+              }
+            });
+          });
+
+          plusButtons.forEach(function (plusButton, index) {
+            plusButton.addEventListener("click", function () {
+              const quantityElement = quantityElements[index];
+              let currentQuantity = parseInt(quantityElement.textContent);
+              currentQuantity += 1;
+              quantityElement.textContent = currentQuantity;
+              updatePrice(index, currentQuantity);
+              const cartID = checkboxes[index].dataset.id;
+              const productID = checkboxes[index].dataset.productId;
+              const priceP = checkboxes[index].dataset.price;
+              updateCart(cartID, productID, currentQuantity, priceP);
+              updateItemCount();
+              calculateTotal();
+            });
+          });
+
+          document.querySelectorAll(".remove").forEach(function (removeLink) {
+            removeLink.addEventListener("click", function () {
+              const productToRemove = removeLink.closest(".product");
+              const productID = removeLink.dataset.productId;
+              const cartID =
+                productToRemove.querySelector(".product-checkbox").dataset.id;
+              const priceP =
+                productToRemove.querySelector(".product-checkbox").dataset
+                  .price;
+              updateCart(cartID, productID, 0, priceP);
+              productToRemove.remove();
+              updateItemCount();
+              calculateTotal();
+            });
+          });
+
+          // Xử lý sự kiện thanh toán
+          // Trong file giỏ hàng, thay đổi phần checkoutButton
+          checkoutButton.addEventListener("click", async function () {
+            const selectedProducts = [];
+            checkboxes.forEach(function (checkbox, index) {
+              if (checkbox.checked) {
+                const productID = parseInt(checkbox.dataset.productId);
+                const price = parseFloat(checkbox.dataset.price);
+                const quantity = parseInt(quantityElements[index].textContent);
+                const name =
+                  document.querySelectorAll(".content h1")[index * 2]
+                    ?.textContent || "";
+                const image =
+                  checkbox.closest(".product").querySelector("img")?.src || "";
+
+                selectedProducts.push({
+                  productId: productID,
+                  quantity: quantity,
+                  price: price,
+                  pname: name,
+                  pimage: image,
+                });
+              }
+            });
+
+            if (selectedProducts.length === 0) {
+              alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+              return;
+            }
+
+            // Tính tổng tiền
+            const total = selectedProducts.reduce(
+              (sum, item) => sum + item.price * item.quantity,
+              0
+            );
+
+            // Lưu vào localStorage
+            localStorage.setItem(
+              "checkout_products",
+              JSON.stringify(selectedProducts)
+            );
+            localStorage.setItem("checkout_total", total.toFixed(1));
+
+            // Chuyển trang
+            window.location.href = "payshop.html";
+          });
+
+          updateItemCount();
+          calculateTotal();
+        }
+
+        async function updateCart(cartID, productID, newQuantity, priceP) {
+          console.log("cartID:", cartID);
+          console.log("productID:", productID);
+          console.log("so luong:", newQuantity);
+          console.log("gia:", priceP);
+
+          try {
+            const response = await fetch("/api/cart/update", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+              body: JSON.stringify({
+                cartId: parseInt(cartID),
+                productId: parseInt(productID),
+                quantity: parseInt(newQuantity),
+                price: parseFloat(priceP),
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error("Lỗi phản hồi từ máy chủ");
+            }
+            const data = await response.json();
+            console.log("Dữ liệu đã được cập nhật:", data);
+          } catch (error) {
+            console.error("LỖI:", error);
+          }
+        }
+
+        await renderCart();
+      });
+    </script>
+  </body>
+</html>

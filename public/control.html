@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bảng điều khiển</title>
+    <link rel="stylesheet" href="/css/ControlManage.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.min.js"></script>
+    <script src="/js/newchart.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <ul
+        style="
+          display: flex;
+          margin-left: 300px;
+          margin-top: -8px;
+          font-size: 15px;
+        "
+      >
+        <li><a href="/">Trang chủ</a></li>
+        <li><a href="/products.html">Sản phẩm</a></li>
+        <li><a href="/promotions.html">Khuyến mãi</a></li>
+        <li><a href="/contact.html">Liên hệ</a></li>
+      </ul>
+      <ul>
+        <li>
+          <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </li>
+      </ul>
+    </div>
+    <div class="container">
+      <div class="menu" style="height: auto">
+        <ul>
+          <li>
+            <a href="#">
+              <img
+                src="https://i.pinimg.com/originals/78/46/75/7846752cfd7b02455fa07c42a5ab2f37.jpg"
+                class="image"
+                alt="Avatar"
+              />
+            </a>
+          </li>
+          <br />
+          <li>Kong Bẻo</li>
+          <li>Chào mừng bạn trở lại</li>
+          <br /><br />
+          <hr />
+          <br />
+          <h1>
+            <a href="/control.html">
+              <button class="but0">
+                <i class="fa-solid fa-landmark"></i> Bảng điều khiển
+              </button>
+            </a>
+          </h1>
+          <h1>
+            <a href="/cus_manage.html">
+              <button class="but1">
+                <i class="fa-solid fa-id-card"></i> Quản lý khách hàng
+              </button>
+            </a>
+          </h1>
+          <h1>
+            <a href="/pro_manage.html">
+              <button class="but2">
+                <i class="fa-solid fa-box"></i> Quản lý sản phẩm
+              </button>
+            </a>
+          </h1>
+          <h1>
+            <a href="/order_manage.html">
+              <button class="but3">
+                <i class="fa-solid fa-money-bill-1"></i> Quản lý đơn hàng
+              </button>
+            </a>
+          </h1>
+        </ul>
+      </div>
+
+      <div class="main">
+        <div class="time">
+          <ul style="display: flex; margin-left: 30px">
+            <li
+              style="
+                list-style-type: none;
+                margin-top: 10px;
+                font-weight: bold;
+                font-size: 14px;
+              "
+            >
+              Bảng điều khiển
+            </li>
+          </ul>
+          <ul style="display: flex; float: right; margin-right: 30px">
+            <li
+              style="
+                list-style-type: none;
+                margin-top: 10px;
+                font-weight: bold;
+                font-size: 14px;
+              "
+            ></li>
+            <li
+              id="currentTime"
+              style="list-style-type: none; margin-top: 10px; margin-left: 20px"
+            ></li>
+          </ul>
+        </div>
+
+        <div class="sumofproduct" style="display: flex">
+          <ul style="margin-left: 30px">
+            <li
+              style="
+                list-style-type: none;
+                margin-top: 25px;
+                margin-bottom: 10px;
+                font-weight: bold;
+                font-size: 18px;
+                color: red;
+              "
+            >
+              Tổng sản phẩm
+            </li>
+            <li style="list-style-type: none; font-size: 14px">
+              <span id="total-products">0</span> sản phẩm
+            </li>
+          </ul>
+          <ul>
+            <li
+              style="
+                list-style-type: none;
+                margin-left: 40px;
+                margin-top: 28px;
+                font-size: 40px;
+                color: #22ad56;
+              "
+            >
+              <i class="fa-solid fa-tag"></i>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sumoforder" style="display: flex">
+          <ul style="margin-left: 30px">
+            <li
+              style="
+                list-style-type: none;
+                margin-top: 25px;
+                margin-bottom: 10px;
+                font-weight: bold;
+                font-size: 18px;
+                color: red;
+              "
+            >
+              Tổng đơn hàng
+            </li>
+            <li style="list-style-type: none; font-size: 14px">
+              <span id="total-orders">0</span> đơn hàng
+            </li>
+          </ul>
+          <ul>
+            <li
+              style="
+                list-style-type: none;
+                margin-left: 40px;
+                margin-top: 28px;
+                font-size: 40px;
+                color: #1d5aab;
+              "
+            >
+              <i class="fa-solid fa-box"></i>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sumofmoney" style="display: flex">
+          <ul style="margin-left: 30px">
+            <li
+              style="
+                list-style-type: none;
+                margin-top: 25px;
+                margin-bottom: 10px;
+                font-weight: bold;
+                font-size: 18px;
+                color: red;
+              "
+            >
+              Tổng thu nhập
+            </li>
+            <li style="list-style-type: none; font-size: 14px">
+              <span id="total-revenue">0</span> USD
+            </li>
+          </ul>
+          <ul>
+            <li
+              style="
+                list-style-type: none;
+                margin-left: 40px;
+                margin-top: 28px;
+                font-size: 40px;
+                color: #ff8b07;
+              "
+            >
+              <i class="fa-solid fa-money-bill-1"></i>
+            </li>
+          </ul>
+        </div>
+
+        <div class="outofstock" style="display: flex">
+          <ul style="margin-left: 30px">
+            <li
+              style="
+                list-style-type: none;
+                margin-top: 25px;
+                margin-bottom: 10px;
+                font-weight: bold;
+                font-size: 18px;
+                color: red;
+              "
+            >
+              Sắp hết hàng
+            </li>
+            <li style="list-style-type: none; font-size: 14px">
+              <span id="low-stock">0</span> sản phẩm
+            </li>
+          </ul>
+          <ul>
+            <li
+              style="
+                list-style-type: none;
+                margin-left: 40px;
+                margin-top: 28px;
+                font-size: 40px;
+                color: #de2222;
+              "
+            >
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </li>
+          </ul>
+        </div>
+
+        <div class="merge">
+          <div class="order">
+            <ul style="display: flex; margin-left: 30px">
+              <li
+                style="
+                  list-style-type: none;
+                  margin-top: 20px;
+                  font-weight: bold;
+                  font-size: 20px;
+                "
+              >
+                TÌNH TRẠNG ĐƠN HÀNG
+              </li>
+            </ul>
+            <br />
+            <hr />
+            <br /><br />
+            <div style="max-height: 400px; overflow-y: auto">
+              <table class="custom-table" style="margin-left: 30px; width: 95%">
+                <thead>
+                  <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+                <tbody id="order-statuses"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="chart">
+            <ul style="display: flex; margin-left: 30px">
+              <li
+                style="
+                  list-style-type: none;
+                  margin-top: 20px;
+                  font-weight: bold;
+                  font-size: 20px;
+                "
+              >
+                DOANH THU THEO NGÀY
+              </li>
+            </ul>
+            <br />
+            <hr />
+            <br /><br />
+            <canvas id="canvas" width="400" height="200"></canvas>
+            <p
+              id="chart-error"
+              style="
+                color: red;
+                text-align: center;
+                margin-top: 10px;
+                display: none;
+              "
+            >
+              Lỗi tải biểu đồ
+            </p>
+          </div>
+        </div>
+
+        <div class="merge2">
+          <div class="cus">
+            <ul style="display: flex; margin-left: 30px">
+              <li
+                style="
+                  list-style-type: none;
+                  margin-top: 20px;
+                  font-weight: bold;
+                  font-size: 20px;
+                "
+              >
+                KHÁCH HÀNG
+              </li>
+            </ul>
+            <br />
+            <hr />
+            <br /><br />
+            <div style="max-height: 400px; overflow-y: auto">
+              <table class="cus-table" style="margin-left: 30px; width: 95%">
+                <thead>
+                  <tr>
+                    <th>ID khách hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                  </tr>
+                </thead>
+                <tbody id="customer-data"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="chart2">
+            <ul style="display: flex; margin-left: 30px">
+              <li
+                style="
+                  list-style-type: none;
+                  margin-top: 20px;
+                  font-weight: bold;
+                  font-size: 20px;
+                "
+              >
+                THỐNG KÊ 6 THÁNG DOANH THU
+              </li>
+            </ul>
+            <br />
+            <hr />
+            <br /><br />
+            <canvas id="barne" width="400" height="200"></canvas>
+            <p
+              id="bar-chart-error"
+              style="
+                color: red;
+                text-align: center;
+                margin-top: 10px;
+                display: none;
+              "
+            >
+              Lỗi tải biểu đồ
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Cập nhật thời gian
+      function updateTime() {
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleString("vi-VN", {
+          weekday: "long",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+        document.getElementById("currentTime").innerHTML = formattedDate;
+      }
+      setInterval(updateTime, 1000);
+      updateTime();
+
+      // Hàm fetch dữ liệu với xử lý lỗi
+      async function fetchData(url) {
+        try {
+          const response = await fetch(url, { credentials: "include" });
+          if (response.status === 401 || response.status === 403) {
+            window.location.href = "/login.html";
+            return null;
+          }
+          if (!response.ok) {
+            throw new Error(
+              `Lỗi khi lấy dữ liệu từ ${url}: ${response.status} ${response.statusText}`
+            );
+          }
+          return response.json();
+        } catch (error) {
+          console.error(`Lỗi fetch ${url}:`, error);
+          return null;
+        }
+      }
+
+      // Hàm thoát HTML để ngăn XSS
+      function escapeHTML(str) {
+        return str.replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[m])
+        );
+      }
+
+      // Hàm tải tất cả đơn hàng
+      async function loadOrders() {
+        const orderStatus = await fetchData("/api/control/orders");
+        if (orderStatus && Array.isArray(orderStatus)) {
+          document.getElementById("order-statuses").innerHTML = orderStatus
+            .map(
+              (order) => `
+          <tr>
+            <td>${order.orderId || "N/A"}</td>
+            <td>${escapeHTML(order.full_name || "Không rõ")}</td>
+            <td>${(order.totalmoney || 0).toLocaleString("vi-VN")} USD</td>
+            <td>${order.status || "N/A"}</td>
+          </tr>
+        `
+            )
+            .join("");
+        } else {
+          console.error(
+            "Lỗi: Dữ liệu đơn hàng không hợp lệ hoặc rỗng",
+            orderStatus
+          );
+          document.getElementById("order-statuses").innerHTML =
+            '<tr><td colspan="4">Không có dữ liệu đơn hàng</td></tr>';
+        }
+      }
+
+      // Hàm tải tất cả khách hàng
+      async function loadCustomers() {
+        const customers = await fetchData("/api/control/customers");
+        if (customers && Array.isArray(customers)) {
+          document.getElementById("customer-data").innerHTML = customers
+            .map(
+              (customer) => `
+          <tr>
+            <td>${customer.customerId || "N/A"}</td>
+            <td>${escapeHTML(customer.full_name || "Không rõ")}</td>
+            <td>${escapeHTML(customer.address || "Chưa cung cấp")}</td>
+            <td>${customer.uPhone || "Chưa cung cấp"}</td>
+          </tr>
+        `
+            )
+            .join("");
+        } else {
+          console.error(
+            "Lỗi: Dữ liệu khách hàng không hợp lệ hoặc rỗng",
+            customers
+          );
+          document.getElementById("customer-data").innerHTML =
+            '<tr><td colspan="4">Không có dữ liệu khách hàng</td></tr>';
+        }
+      }
+
+      // Hàm làm mới dữ liệu
+      async function refreshData() {
+        try {
+          const [products, orders, revenue, lowStock] = await Promise.all([
+            fetchData("/api/control/total-products"),
+            fetchData("/api/control/total-orders"),
+            fetchData("/api/control/total-revenue"),
+            fetchData("/api/control/low-stock-products"),
+          ]);
+
+          document.getElementById("total-products").textContent =
+            products?.total_products || 0;
+          document.getElementById("total-orders").textContent =
+            orders?.total_orders || 0;
+          document.getElementById("total-revenue").textContent = (
+            revenue?.total_revenue || 0
+          ).toLocaleString("vi-VN");
+          document.getElementById("low-stock").textContent =
+            lowStock?.length || 0;
+
+          await loadOrders();
+          await loadCustomers();
+          await renderLineChart();
+          await renderBarChart();
+        } catch (error) {
+          console.error("Lỗi khi làm mới dữ liệu:", error);
+          alert("Lỗi khi làm mới dữ liệu, vui lòng kiểm tra console");
+        }
+      }
+
+      // Tải dữ liệu khi trang được tải
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const [products, orders, revenue, lowStock] = await Promise.all([
+            fetchData("/api/control/total-products"),
+            fetchData("/api/control/total-orders"),
+            fetchData("/api/control/total-revenue"),
+            fetchData("/api/control/low-stock-products"),
+          ]);
+
+          document.getElementById("total-products").textContent =
+            products?.total_products || 0;
+          document.getElementById("total-orders").textContent =
+            orders?.total_orders || 0;
+          document.getElementById("total-revenue").textContent = (
+            revenue?.total_revenue || 0
+          ).toLocaleString("vi-VN");
+          document.getElementById("low-stock").textContent =
+            lowStock?.length || 0;
+
+          await loadOrders();
+          await loadCustomers();
+          await renderLineChart();
+          await renderBarChart();
+        } catch (error) {
+          console.error("Lỗi khi tải dữ liệu:", error);
+          alert("Lỗi khi tải dữ liệu, vui lòng kiểm tra console");
+        }
+      });
+    </script>
+  </body>
+</html>

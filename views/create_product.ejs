@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tạo sản phẩm mới</title>
+    <link rel="stylesheet" href="/public/css/style.css" />
+  </head>
+  <body>
+    <h1>Tạo sản phẩm mới</h1>
+    <form action="/api/products" method="POST">
+      <label>Product Name:</label>
+      <input type="text" name="pname" required /><br /><br />
+
+      <label>Product Image (URL):</label>
+      <input type="text" name="pimage" required /><br /><br />
+
+      <label>Size:</label>
+      <input type="text" name="psize" required /><br /><br />
+
+      <label>Quantity:</label>
+      <input type="number" name="pquantity" required /><br /><br />
+
+      <label>Price:</label>
+      <input type="number" name="pprice" step="0.01" required /><br /><br />
+
+      <label>Category ID:</label>
+      <input type="number" name="category_id" required /><br /><br />
+
+      <label>Description:</label>
+      <textarea name="pdesc" rows="4" cols="50"></textarea><br /><br />
+
+      <button type="submit">Create Product</button>
+    </form>
+    <a href="/pro_manage.html">Quay lại</a>
+  </body>
+</html>
