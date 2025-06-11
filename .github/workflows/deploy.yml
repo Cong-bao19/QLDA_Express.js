@@ -32,7 +32,7 @@ jobs:
             git stash
             git pull origin main
             npm install
-            pm2 restart QLDA_Express.js
+            pm2 restart QLDA_Express
 
       - name: Remove Github Actions IP from security group
         run: |
