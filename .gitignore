@@ -41,3 +41,11 @@ coverage/
 
 # Local development
 /public/uploads/
+
+node_modules/
+.env
+*.pem
+*.sql
+pm2.log
+.pm2/
+/etc/ssl/selfsigned/
